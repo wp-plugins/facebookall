@@ -1,7 +1,7 @@
 === Facebook All ===
 Contributors: sourceaddons
 Tags: Facebook Login, facebook connect, social login, social share, facebook fanbox, facebook comments, facebook facepile, facebook login for wordpress, facebook all, facebook social plugins
-Requires at least: 3.0 or higher
+Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 1.0
 License: GPLv2 or later
@@ -84,8 +84,8 @@ An answer to that question.
 Answer to foo bar dilemma.
 
 == Screenshots ==
-1. **On login page**: This is an example presentation of login page with facebook login button.
-2. **admin end**: displaysadmin area.
+1. This is an example presentation of login page with facebook login button.
+2. displays admin area.
 
 == Changelog ==
 
