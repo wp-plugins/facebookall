@@ -35,9 +35,9 @@ This plugin is maintained by sourceaddons. for any tech support or any customiza
 
 1. Download, Unzip and drop the extention on /wp-content/plugins/ directory,
 
-1. As admistration, activate the plugin through the 'Plugins' menu in WordPress,
+2. As admistration, activate the plugin through the 'Plugins' menu in WordPress,
 
-1. Goto the Settings > Facebook All to get started.
+3. Goto the Settings > Facebook All to get started.
 
 
 = Using admin =
@@ -84,12 +84,8 @@ An answer to that question.
 Answer to foo bar dilemma.
 
 == Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets 
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png` 
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. **On login page**: This is an example presentation of login page with facebook login button.
+2. **admin end**: displaysadmin area.
 
 == Changelog ==
 
