@@ -3,7 +3,7 @@ Contributors: sourceaddons
 Tags: Facebook Login, facebook connect, social login, social share, facebook fanbox, facebook comments, facebook facepile, facebook login for wordpress, facebook all, facebook social plugins
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
