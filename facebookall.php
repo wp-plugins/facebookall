@@ -3,7 +3,7 @@
 Plugin Name: Facebook All
 Plugin URI: http://www.sourceaddons.com/
 Description: Allow your visitors to <strong>comment, login, register and share with facebook </strong> also post on their facebook wall.
-Version: 1.0
+Version: 1.1
 Author: sourceaddons
 Author URI: http://www.sourceaddons.com/
 License: GPL2
@@ -38,8 +38,11 @@ function facebookall_front_scripts() {
     wp_register_script('gplusjs', 'https://apis.google.com/js/plusone.js', false, '1.4.2');
     wp_enqueue_script('gplusjs');
   }
-  wp_register_script('connect_js', plugins_url('assets/js/fball_connect.js', __FILE__), false, '1.0.0');
-  wp_enqueue_script('connect_js');
+  if( !wp_script_is( 'connect_js', 'registered' ) ) {
+    wp_register_script('connect_js', plugins_url('assets/js/fball_connect.js', __FILE__), false, '1.0.0');
+  }
+  wp_print_scripts( "connect_js" );
+  //wp_enqueue_script('connect_js');
 }
 add_action ('login_head', 'facebookall_front_scripts');
 add_action ('wp_head', 'facebookall_front_scripts');

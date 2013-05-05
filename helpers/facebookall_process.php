@@ -4,11 +4,15 @@ function facebookall_make_userlogin() {
   if (isset($_GET['code']) AND !empty($_GET['code'])) {
     $code = $_GET['code'];
     parse_str(facebookall_get_fb_contents("https://graph.facebook.com/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url()) .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code)));
-	echo '<script>
-         window.opener.FbAll.parentRedirect({"action" : "fball","fball_access_token" : "'.$access_token.'"});
+	if(empty($access_token)) {
+	  parse_str(facebookall_get_fb_contents("https://graph.facebook.com/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url().'/') .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code)));
+    }
+	?>
+	<script>
+         window.opener.FbAll.parentRedirect({'action' : 'fball', 'fball_access_token' : '<?php echo $access_token?>'});
          window.close();
-		 </script>';
-  }
+		 </script>
+  <?php }
   if(!empty($_REQUEST['fball_access_token']) AND isset($_REQUEST['fball_redirect'])) {
     $fbuser_info = json_decode(facebookall_get_fb_contents("https://graph.facebook.com/me?access_token=".$_REQUEST['fball_access_token']));
     $fbdata = facebookall_get_fbuserprofile_data($fbuser_info);
@@ -28,7 +32,7 @@ function facebookall_make_userlogin() {
 	  $new_user = false;
       $user_id = facebookall_get_userid($fbdata['id']);
       if (!is_numeric ($user_id) AND empty($user_id)) {
-        if (($user_id_tmp = email_exists ($user_email)) !== false) {
+        if (($user_id_tmp = email_exists ($fbdata['email'])) !== false) {
           $user_data = get_userdata ($user_id_tmp);
           if ($user_data !== false) {
             $user_id = $user_data->ID;

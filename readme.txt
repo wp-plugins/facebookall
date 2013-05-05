@@ -92,3 +92,9 @@ Answer to foo bar dilemma.
 = 1.0 =
 * A intial version.
 
+= 1.1 =
+* Integrated with facebook app new changes.
+* Redirect uri bug fixed.
+* Added option for enable recommendations bar.
+* share enhanced with post share.
+* blank page show on login issue fixed.

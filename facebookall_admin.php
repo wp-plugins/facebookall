@@ -92,6 +92,7 @@ function facebookall_save_admin_settings($fball_settings) {
   $fball_settings['facepile_numrows'] = trim($fball_settings['facepile_numrows']);
   $fball_settings['facepile_color'] = ((isset($fball_settings['facepile_color']) && in_array($fball_settings['facepile_color'], array('1', '0'))) ? $fball_settings['facepile_color'] : '1');
   $fball_settings['facepile_size'] = ((isset($fball_settings['facepile_size']) && in_array($fball_settings['facepile_size'], array('0', '1', '2'))) ? $fball_settings['facepile_size'] : '1');
+  $fball_settings['enable_recbar'] = ((isset($fball_settings['enable_recbar']) && in_array($fball_settings['enable_recbar'], array('1', '0'))) ? $fball_settings['enable_recbar'] : '0');
   $fball_settings['recbar_pageurl'] = trim($fball_settings['recbar_pageurl']);
   $fball_settings['recbar_readtime'] = trim($fball_settings['recbar_readtime']);
   $fball_settings['recbar_appid'] = trim($fball_settings['recbar_appid']);
@@ -680,6 +681,16 @@ function facebookall_admin_settings() {
                          <th class="head" colspan="2"><?php _e('Facebook All Recommendations Bar Settings','facebookall');?></th>
                          </tr>
 						 <tr >
+                        <th scope="fballrow"><?php _e('Enable Recommendations Bar','facebookall');?></th>
+						 <?php $yesenable_recbar = "";
+                               $noenable_recbar = "";
+                               if($fball_settings["enable_recbar"] == "1") $yesenable_recbar = "checked='checked'";
+                               elseif($fball_settings["enable_recbar"] == "0") $noenable_recbar = "checked='checked'";
+                               else $noenable_recbar = "checked='checked'";?>
+                         <td><input name="fball_settings[enable_recbar]" type="radio" <?php echo $yesenable_recbar;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[enable_recbar]" type="radio" <?php echo $noenable_recbar;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?></td>
+                       </tr>
+						 <tr >
                         <th scope="fballrow"><?php _e('Url of the article','facebookall');?></th>
                          <td><input size="90" type="text" name="fball_settings[recbar_pageurl]" value="<?php echo (isset($fball_settings['recbar_pageurl']) ? htmlspecialchars ($fball_settings['recbar_pageurl']) : ''); ?>"/></td>
                        </tr>
@@ -725,20 +736,22 @@ function facebookall_admin_settings() {
 		  <div style="width:27%; float:left; margin-left:15px;">
 		  <div>
            <div class="fballwelcome-panel" style="margin:0; padding:5px; line-height: 24px;">
-		   <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-           <input type="hidden" name="cmd" value="_s-xclick">
-           <input type="hidden" name="hosted_button_id" value="XLZSDLXWGA5DA">
-           <table>
-           <tr><td><input type="hidden" name="on0" value="if this extension useful to you. would you buy me a coffee/beer"><?php _e('If this plugin is useful to you and for help to improve would you buy me a coffee/beer.', 'facebookall'); ?></td></tr><tr><td><select name="os0">
-	       <option value="Coffee">Coffee $10.00 USD</option>
-	       <option value="Special coffee">Special coffee $15.00 USD</option>
-	       <option value="Beer">Beer $20.00 USD</option>
-           </select> </td></tr>
-           </table>
-           <input type="hidden" name="currency_code" value="USD">
-           <input type="image" src="<?php echo FACEBOOKALL_PLUGIN_URL;?>/assets/img/paypal-buyme.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-           <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-          </form>
+		   
+		  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="XLZSDLXWGA5DA">
+<table>
+<tr><td><input type="hidden" name="on0" value="if this extension useful to you. would you buy me a coffee/beer"><?php _e('If this plugin is useful to you and for help to improve would you buy me a coffee/beer.', 'facebookall'); ?></td></tr><tr><td><select name="os0">
+	<option value="Coffee">Coffee $5.00 USD</option>
+	<option value="Special coffee">Special coffee $10.00 USD</option>
+	<option value="Beer">Beer $20.00 USD</option>
+</select> </td></tr>
+</table>
+<input type="hidden" name="currency_code" value="USD">
+<input type="image" src="<?php echo FACEBOOKALL_PLUGIN_URL;?>/assets/img/paypal-buyme.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+
         </div>
       </div>
     <div>

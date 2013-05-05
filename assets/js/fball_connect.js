@@ -22,7 +22,7 @@ var FbAll = {
  
         var key;
         for (key in config) {
-            form.innerHTML += '<input type="hidden" id="' + key + '" name="' + key + '" value="' + config[key] + '">';
+			form.innerHTML += '<input type="hidden" id="' + key + '" name="' + key + '" value="' + config[key] + '">';
         }
  
         document.body.appendChild(form);

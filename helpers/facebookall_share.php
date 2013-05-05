@@ -2,6 +2,7 @@
 /*
  * Adding comments.
  */
+ 
 function facebookall_get_fb_comments() {
   $fball_settings = get_option('fball_settings');
   if ($fball_settings['enablecomments'] == '1') {
@@ -56,7 +57,7 @@ add_filter('the_content', 'facebookall_add_fb_comments');
  * Adding social share.
  */
 function facebookall_get_socialshre() {
-global $post; 
+global $post;
   $fball_settings = get_option('fball_settings');
   if (!empty($fball_settings['enableshare']) AND $fball_settings['enableshare'] == '1') {
     $layout_style = (!empty($fball_settings['share_layout']) ? $fball_settings['share_layout'] : "");
@@ -72,7 +73,7 @@ global $post;
     $output = "";
    
 	//Output
-    $output .= "<style>.fballshare_left {float:left}.fballshare {margin:0px;text-align:center}.fball_fblike{width:95px;}.fball_pinterest, .fball_linkedin, .fball_digg {margin-right:10px}.fballshare .fball_fblike span{width: 535px!important;}";
+    $output .= "<style>.fballshare_left {float:left}.fballshare {margin:0px;text-align:center}.fball_fblike{width:95px;}.fball_pinterest, .fball_linkedin, .fball_digg {margin-right:10px;} .fballshare .fball_fblike span{width: 535px!important;}";
 	if($layout_style=='1') {
 	$output .= ".fball_plusone {width:70px}.fball_twitter {width:106px}.fball_digg {margin-left:25px}";
 	 } 
@@ -83,16 +84,16 @@ global $post;
 $output .="</style><div class='fballshare'>";
     
     if ($fball_settings['share_linkedin']== '1') {
-      $output .= "<div class='fball_linkedin fballshare_left'><script type='IN/Share' data-url=" . facebookall_get_current_url() . " data-counter='" . $linkedin_style . "'></script></div>";
+      $output .= "<div class='fball_linkedin fballshare_left'><script type='IN/Share' data-url=" . get_permalink() . " data-counter='" . $linkedin_style . "'></script></div>";
 	  }
     if ($fball_settings['share_twitter']== '1') {
-      $output .= "<div class='fball_twitter fballshare_left'><a href='http://twitter.com/share' class='twitter-share-button' data-text='" . $title. "' data-url='" . facebookall_get_current_url() . "' data-count='" . $twitter_style . "'>Tweet</a></div>";
+      $output .= "<div class='fball_twitter fballshare_left'><a href='http://twitter.com/share' class='twitter-share-button' data-text='" . $title. "' data-url='" . get_permalink() . "' data-count='" . $twitter_style . "'>Tweet</a></div>";
 	  }
     if ($fball_settings['share_gplus']== '1') {
-      $output .= "<div class='fball_plusone fballshare_left'><g:plusone href='" . facebookall_get_current_url() . "' size='" . $gplus_style . "'></g:plusone></div>";
+      $output .= "<div class='fball_plusone fballshare_left'><g:plusone href='" . get_permalink() . "' size='" . $gplus_style . "'></g:plusone></div>";
 	  }
     if ($fball_settings['share_pin']== '1') {
-      $output .= "<div class='fball_pinterest fballshare_left'><a data-pin-config='" . $pin_style ."' href='//pinterest.com/pin/create/button/?url=" . facebookall_get_current_url() . "&media=&description=" . $title . "' data-pin-do = 'buttonPin' ><img src='//assets.pinterest.com/images/pidgets/pin_it_button.png'/></a></div>";
+      $output .= "<div class='fball_pinterest fballshare_left'><a data-pin-config='" . $pin_style ."' href='//pinterest.com/pin/create/button/?url=" . get_permalink() . "&media=&description=" . $title . "' data-pin-do = 'buttonPin' ><img src='//assets.pinterest.com/images/pidgets/pin_it_button.png'/></a></div>";
 	  }
     if ($fball_settings['share_digg']== '1') {
 	  $output .= "<script>(function() {
@@ -102,7 +103,7 @@ $output .="</style><div class='fballshare'>";
 					  s.src = 'http://widgets.digg.com/buttons.js';
 					  s1.parentNode.insertBefore(s, s1);
 					})();</script>";
-      $output .= "<div class='fball_digg fballshare_left'><a class='DiggThisButton " . $digg_style . "' href='http://digg.com/submit?url='".facebookall_get_current_url()."'></a></div>";
+      $output .= "<div class='fball_digg fballshare_left'><a class='DiggThisButton " . $digg_style . "' href='http://digg.com/submit?url='".get_permalink()."'></a></div>";
 	  }
 	  if ($fball_settings['share_facebook']== '1' ) {
 	  $output .= "<script>(function(d){
@@ -111,7 +112,8 @@ $output .="</style><div class='fballshare'>";
 					  js.src = '//connect.facebook.net/en_US/all.js#xfbml=1';
 					  d.getElementsByTagName('head')[0].appendChild(js);
 					}(document));</script>";
-      $output .= "<div class='fball_fblike fballshare_left'><div class='fb-like' data-href='" . facebookall_get_current_url() . "' data-send='false' data-layout='" . $like_btn_style . "' data-width='120' data-show-faces='false'></div></div>";			
+					
+	    $output .= "<div class='fball_fblike fballshare_left'><div class='fb-like' data-href='" . get_permalink() . "' data-send='false' data-layout='" . $like_btn_style . "' data-width='120' data-show-faces='false'></div></div>";
     }
       $output .="<div style='clear:both'></div></div>";
 	  $sharetitle = '';

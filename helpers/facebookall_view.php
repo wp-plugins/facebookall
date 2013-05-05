@@ -153,7 +153,9 @@ function facebookall_render_facepile() {
  * Create recommendations bar.
  */
 function facebookall_render_recommendbar() {
-  $fball_settings = get_option('fball_settings');?>
+  $fball_settings = get_option('fball_settings');
+  if ($fball_settings['enable_recbar'] == '1') {
+  ?>
  <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -163,5 +165,5 @@ function facebookall_render_recommendbar() {
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-recommendations-bar" data-href="<?php echo $fball_settings['recbar_pageurl'];?>" data-trigger="onvisible" data-read-time="<?php echo $fball_settings['recbar_readtime'];?>" data-action="<?php if($fball_settings['recbar_verb'] == '1') { echo 'like';}else {echo 'recommend';}?>" data-side="<?php if($fball_settings['recbar_side'] == '1') { echo 'left';}else {echo 'right';}?>" data-site="<?php echo $_SERVER['HTTP_HOST'];?>"></div>
-<?php }
+<?php }}
 add_action('wp_footer','facebookall_render_recommendbar');
