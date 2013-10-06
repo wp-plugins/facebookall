@@ -164,6 +164,6 @@ function facebookall_render_recommendbar() {
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $fball_settings['recbar_appid'];?>";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-recommendations-bar" data-href="<?php echo $fball_settings['recbar_pageurl'];?>" data-trigger="onvisible" data-read-time="<?php echo $fball_settings['recbar_readtime'];?>" data-action="<?php if($fball_settings['recbar_verb'] == '1') { echo 'like';}else {echo 'recommend';}?>" data-side="<?php if($fball_settings['recbar_side'] == '1') { echo 'left';}else {echo 'right';}?>" data-site="<?php echo $_SERVER['HTTP_HOST'];?>"></div>
+<div class="fb-recommendations-bar" data-site="<?php echo $fball_settings['recbar_pageurl'];?>" data-trigger="onvisible" data-read-time="<?php echo $fball_settings['recbar_readtime'];?>" data-action="<?php if($fball_settings['recbar_verb'] == '1') { echo 'like';}else {echo 'recommend';}?>" data-side="<?php if($fball_settings['recbar_side'] == '1') { echo 'left';}else {echo 'right';}?>"></div>
 <?php }}
 add_action('wp_footer','facebookall_render_recommendbar');

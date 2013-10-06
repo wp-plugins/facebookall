@@ -116,7 +116,10 @@ function facebookall_admin_settings() {
       <div id="icon-options-general" class="icon32">
       <br>
       </div>
-      <h2><?php _e('Facebook All Admin Settings', 'facebookall');?></h2>
+      <h2><?php _e('Facebook All Admin Settings', 'facebookall');?></h2><br />
+	  <div style="background-color: #FFFFE0; border:1px solid #E6DB55; padding:5px; margin-bottom:5px; width: 1060px; font-size:13px;">
+			 <?php _e('Please upgrade your plugin with more new feature ...', 'facebookall') ?> <a target="_blank" href="http://www.sourceaddons.com/wp_feature.php" >  <?php _e('click here', 'facebookall') ?> </a>.
+		</div>
       <div id="fballwelcome-panel" class="fballwelcome-panel">
         <div class="fballwelcome-panel-content">
         <h3><?php _e('Thank you for having Facebook All!', 'facebookall');?></h3>
@@ -188,7 +191,7 @@ function facebookall_admin_settings() {
                      <!-- Form basic Box -->
                         <table class="facebookall_table">
                          <tr>
-   	                     <th class="head" colspan="2"><?php _e('Facebook All API Configration', 'facebookall');?></th>
+   	                     <th class="head" colspan="2"><?php _e('Facebook All API Configuration', 'facebookall');?></th>
                          </tr>
                          <tr>
                          <th scope="fballrow"><?php _e('Facebook API ID', 'facebookall');?></th>
@@ -225,7 +228,7 @@ function facebookall_admin_settings() {
                        </table>
 					   <table class="facebookall_table">
                        <tr>
-                        <th class="head" colspan="2"><?php _e('Facebook All Display Configration', 'facebookall');?></th>
+                        <th class="head" colspan="2"><?php _e('Facebook All Display Configuration', 'facebookall');?></th>
                        </tr>
                       
                        <tr>
@@ -281,7 +284,7 @@ function facebookall_admin_settings() {
                        </table>
                        <table class="facebookall_table">
                        <tr>
-                        <th class="head" colspan="2"><?php _e('Facebook All Basic Configration','facebookall');?></th>
+                        <th class="head" colspan="2"><?php _e('Facebook All Basic Configuration','facebookall');?></th>
                        </tr>
                       
                        <tr>
@@ -324,10 +327,10 @@ function facebookall_admin_settings() {
 						elseif($fball_settings["redirect"] == "custom") $custom = "checked='checked'";
 						else $samepage = "checked='checked'";
 						?>
-                         <input name="fball_settings[redirect]" type="radio" <?php echo $homepage;?>value="home" />&nbsp;&nbsp;<?php _e('Redirct users to home page of my blog','facebookall');?> <br />
+                         <input name="fball_settings[redirect]" type="radio" <?php echo $homepage;?>value="home" />&nbsp;&nbsp;<?php _e('Redirect users to home page of my blog','facebookall');?> <br />
                          <input name="fball_settings[redirect]" type="radio" <?php echo $samepage;?>value="current" />&nbsp;&nbsp;<?php _e('Redirect users back to the current page','facebookall');?><br />
-						 <input name="fball_settings[redirect]" type="radio" <?php echo $dashboard;?>value="account" />&nbsp;&nbsp;<?php _e('Redirct to their account deshboard','facebookall');?>  <br />
-                         <input name="fball_settings[redirect]" type="radio" <?php echo $custom;?>value="custom" />&nbsp;&nbsp;<?php _e('Redirct to following url:','facebookall');?><br />
+						 <input name="fball_settings[redirect]" type="radio" <?php echo $dashboard;?>value="account" />&nbsp;&nbsp;<?php _e('Redirect to their account dashboard','facebookall');?>  <br />
+                         <input name="fball_settings[redirect]" type="radio" <?php echo $custom;?>value="custom" />&nbsp;&nbsp;<?php _e('Redirect to following url:','facebookall');?><br />
 						 <input type="text" name="fball_settings[custom_url]" value="<?php if($fball_settings["redirect"]=='custom'){echo htmlspecialchars($fball_settings["custom_url"]);} ?>" placeholder="http://myblog.com/?page_id=3" size="90" />	
                         </td>
                         </tr>
@@ -691,7 +694,7 @@ function facebookall_admin_settings() {
                          <input name="fball_settings[enable_recbar]" type="radio" <?php echo $noenable_recbar;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?></td>
                        </tr>
 						 <tr >
-                        <th scope="fballrow"><?php _e('Url of the article','facebookall');?></th>
+                        <th scope="fballrow"><?php _e('Domain','facebookall');?></th>
                          <td><input size="90" type="text" name="fball_settings[recbar_pageurl]" value="<?php echo (isset($fball_settings['recbar_pageurl']) ? htmlspecialchars ($fball_settings['recbar_pageurl']) : ''); ?>"/></td>
                        </tr>
                           <tr >

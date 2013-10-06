@@ -1,14 +1,18 @@
 // JavaScript Document
 var FbAll = {
     facebookLogin: function () {
-        var clientid = document.getElementById("client_id");
+		var height = 300;
+	    var width = 550;
+	    var left = Number((screen.width/2)-(width/2));
+	    var top = Number((screen.height/2)-(height/2));
+	    var clientid = document.getElementById("client_id");
         var redirecturi = document.getElementById("redirect_uri");
  
         if (clientid.value == '') {
             alert("You have not configure facebook api settings.")
         } else {
-            window.open('https://graph.facebook.com/oauth/authorize?client_id=' + clientid.value + '&redirect_uri=' + redirecturi.value + '&scope=email,publish_stream',
-				'', 'scrollbars=no,menubar=no,height=400,width=800,resizable=yes,toolbar=no,status=no');
+            var openedwin = window.open('https://graph.facebook.com/oauth/authorize?client_id=' + clientid.value + '&redirect_uri=' + redirecturi.value + '&scope=email,user_birthday,user_hometown,user_location,user_work_history,user_website,publish_stream&display=popup', '', 'scrollbars=no, menubar=no, height='+height+', width='+width+', top='+top+', left='+left+', resizable=yes, toolbar=no, status=no');
+			if (window.focus) {openedwin.focus()}
         }
     },
  
