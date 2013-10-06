@@ -1,6 +1,6 @@
 === Facebook All ===
 Contributors: sourceaddons, Patryk(Language translator-polish)
-Tags: Facebook Login, Facebook Connect, Social Login, Social Share, facebook fanbox, Facebook Comments, facebook facepile, facebook login for wordpress, facebook all, Facebook All, Facebook, Facebook social plugins
+Tags: Facebook Login, Facebook Connect, Social Login, Social Share, facebook fanbox, Facebook Comments, facebook facepile, Facebook Login For Wordpress, facebook all, Facebook All, Facebook, Facebook social plugins, Facebook Analytics
 Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 1.2
@@ -19,7 +19,7 @@ login and register with social networks Facebook.
 <strong>Its includes:</strong>
 
 <ul>
- <li>Facebook Analytics(Premium Feature)</li><li>Available in Languages (German, Polish)</li><li>Facebook Login</li><li>Facebook Fanbox</li> <li>Facebook Facepile</li><li>Facebook Comments</li><li>Facebook Recommendations Bar</li><li>Social Sharing</li></ul>
+ <li>Facebook Analytics(Premium Feature)</li><li>Woocommerce compatible(Premium Feature)</li><li>Available in Languages (German, Polish)</li><li>Facebook Login</li><li>Facebook Fanbox</li> <li>Facebook Facepile</li><li>Facebook Comments</li><li>Facebook Recommendations Bar</li><li>Social Sharing</li></ul>
 
 
 <strong>Features:</strong>
