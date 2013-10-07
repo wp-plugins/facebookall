@@ -1,4 +1,4 @@
-=== Facebook All ===
+﻿=== Facebook All ===
 Contributors: sourceaddons, Patryk(Language translator - polish )
 Tags: Facebook Login, Facebook Connect, Social Login, Social Share, facebook fanbox, Facebook Comments, facebook facepile, Facebook Login For Wordpress, facebook all, Facebook All, Facebook, Facebook social plugins, Facebook Analytics
 Requires at least: 3.0
@@ -110,3 +110,4 @@ Answer to foo bar dilemma.
 * Woocommerce compatible..
 * localization for facebook social plugins added.
 * Available in Languages (German, Polish)
+
