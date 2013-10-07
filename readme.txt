@@ -1,5 +1,5 @@
 === Facebook All ===
-Contributors: sourceaddons, Patryk (Language translator-polish)
+Contributors: sourceaddons, Patryk
 Tags: Facebook Login, Facebook Connect, Social Login, Social Share, facebook fanbox, Facebook Comments, facebook facepile, Facebook Login For Wordpress, facebook all, Facebook All, Facebook, Facebook social plugins, Facebook Analytics
 Requires at least: 3.0
 Tested up to: 3.5.1
@@ -86,7 +86,7 @@ Answer to foo bar dilemma.
 == Screenshots ==
 1. This is an example presentation of login page with facebook login button.
 2. displays admin area.
-3. showing facebook analytics screenshot.
+3. Facebook analytics screenshot.
 
 == Changelog ==
 
@@ -106,7 +106,7 @@ Answer to foo bar dilemma.
 * Typo issue fixed in admin.
 * premium features added :-
 1. Facebook Analytics with charts.
-2. Option for popup/same window redirection (Works in all browser).
-3. Woocommerce compatible..
-4. localization for facebook social plugins added.
-5. Available in Languages (German, Polish)
+1. Option for popup/same window redirection (Works in all browser).
+1. Woocommerce compatible..
+1. localization for facebook social plugins added.
+1. Available in Languages (German, Polish)
