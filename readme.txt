@@ -1,9 +1,9 @@
 === Facebook All ===
-Contributors: sourceaddons
-Tags: Facebook Login, Facebook Connect, Social Login, Social Share, facebook fanbox, Facebook Comments, facebook facepile, facebook login for wordpress, facebook all, Facebook All, Facebook, Facebook social plugins
+Contributors: sourceaddons, Patryk(Language translator - polish)
+Tags: Facebook Login, facebook connect, social login, social share, facebook fanbox, facebook comments, facebook facepile, facebook login for wordpress, facebook all, facebook social plugins
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.2
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ login and register with social networks Facebook.
 <strong>Its includes:</strong>
 
 <ul>
- <li>Facebook Analytics(Premium Feature)</li><li>Available in Languages (German, Polish)</li><li>Facebook Login</li><li>Facebook Fanbox</li> <li>Facebook Facepile</li><li>Facebook Comments</li><li>Facebook Recommendations Bar</li><li>Social Sharing</li></ul>
+ <li>Facebook Analytics(Premium Feature)</li><li>Woocommerce compatible(Premium Feature)</li><li>Available in Languages (German, Polish)</li><li>Facebook Login</li><li>Facebook Fanbox</li> <li>Facebook Facepile</li><li>Facebook Comments</li><li>Facebook Recommendations Bar</li><li>Social Sharing</li></ul>
 
 
 <strong>Features:</strong>
@@ -86,7 +86,7 @@ Answer to foo bar dilemma.
 == Screenshots ==
 1. This is an example presentation of login page with facebook login button.
 2. displays admin area.
-3. showing facebook analytics screenshot.
+3. Facebook Analytics example.
 
 == Changelog ==
 
@@ -105,8 +105,8 @@ Answer to foo bar dilemma.
 * Recommendations bar bug fixed.
 * Typo issue fixed in admin.
 * premium features added :-
-** Facebook Analytics with charts.
-** Option for popup/same window redirection (Works in all browser).
-** Woocommerce compatible..
-** localization for facebook social plugins added.
-** Available in Languages (German, Polish)
+* Facebook Analytics with charts.
+* Option for popup/same window redirection (Works in all browser).
+* Woocommerce compatible..
+* localization for facebook social plugins added.
+* Available in Languages (German, Polish)
