@@ -1,6 +1,6 @@
 === Facebook All ===
 Contributors: sourceaddons, patrykos360 (Language translator - polish)
-Tags: Facebook Login, facebook connect, social login, social share, facebook fanbox, facebook comments, facebook facepile, facebook login for wordpress, facebook all, facebook social plugins
+Tags: Facebook Login, Facebook Connect, social login, social share, facebook fanbox, facebook comments, facebook facepile, Facebook Login For Wordpress, facebook all, facebook social plugins, Facebook Analytics, Facebook
 Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 1.2
