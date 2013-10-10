@@ -30,6 +30,11 @@ This plugin is maintained by sourceaddons. for any tech support or any customiza
 
 == Installation ==
 
+= Install Upgrade version =
+
+
+1. As admistration, Dectivate and delete the old installed plugin(facebookall) through the 'Plugins' menu in WordPress,
+
 = Using upload =
 
 
@@ -105,8 +110,8 @@ Answer to foo bar dilemma.
 * Recommendations bar bug fixed.
 * Typo issue fixed in admin.
 * premium features added :-
-* Facebook Analytics with charts.
-* Option for popup/same window redirection (Works in all browser).
-* Woocommerce compatible..
-* localization for facebook social plugins added.
-* Available in Languages (German, Polish)
+1. Facebook Analytics with charts.
+2. Option for popup/same window redirection (Works in all browser).
+3. Woocommerce compatible..
+4. localization for facebook social plugins added.
+5. Available in Languages (German, Polish)
