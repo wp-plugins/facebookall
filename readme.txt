@@ -91,7 +91,7 @@ Answer to foo bar dilemma.
 == Screenshots ==
 1. This is an example presentation of login page with facebook login button.
 2. displays admin area.
-3. Facebook Analytics example.
+3. This is an example of Facebook Analytics in admin area.
 
 == Changelog ==
 
