@@ -7,7 +7,7 @@ Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Make your blog fully social with facebook social plugins and allow your visitor to comment and login with Facebook.
+Make your blog fully social with facebook social plugins and allow your visitor to comment and login with Facebook and Google.
 == Description ==
 
 
