@@ -153,7 +153,7 @@ function facebookall_render_facepile() {
 /*
  * Create recommendations bar.
  */
-function facebookall_render_recommendbar($content) {
+function facebookall_render_recommendbar() {
   $fball_settings = get_option('fball_settings');
   if ($fball_settings['enable_recbar'] == '1') { 
   $side = ($fball_settings['recbar_side'] == '1' ? 'left' : 'right');
@@ -161,9 +161,9 @@ function facebookall_render_recommendbar($content) {
 if ((is_single() && $fball_settings['rec_posts'] == '1') ||
       (is_page() && $fball_settings['rec_pages'] == '1') ||
       ((is_home() || is_front_page()) && $fball_settings['rec_home'] == '1')) {
-		$content .= "<div class=\"fb-recommendations-bar\" data-href=\"".get_permalink()."\" data-read-time=\"".$fball_settings['recbar_readtime']."\" data-side=\"".$side."\" data-action=\"".$verb."\"></div>";
+		$content = "<div class=\"fb-recommendations-bar\" data-href=\"".get_permalink()."\" data-read-time=\"".$fball_settings['recbar_readtime']."\" data-side=\"".$side."\" data-action=\"".$verb."\"></div>";
      }
-return $content;
+echo $content;
  }
 }
-add_filter ('the_content', 'facebookall_render_recommendbar', 1);
+add_action ('wp_footer', 'facebookall_render_recommendbar');
