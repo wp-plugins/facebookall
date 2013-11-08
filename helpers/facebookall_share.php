@@ -13,7 +13,7 @@ function facebookall_get_fb_comments() {
 	  }
    if ($fball_settings['comment_color'] == '0') {$colorscheme = 'dark';}
    else {$colorscheme = 'light';}
-   $show_comments .= '<div class="fb-comments" data-href="'. facebookall_get_current_url() .'" data-width="'.$fball_settings['comment_width'].'" data-num-posts="'.$fball_settings['comment_numpost'].'" data-colorscheme="'.$colorscheme.'"></div>';
+   $show_comments .= '<div class="fb-comments" data-href="'. get_permalink() .'" data-width="'.$fball_settings['comment_width'].'" data-num-posts="'.$fball_settings['comment_numpost'].'" data-colorscheme="'.$colorscheme.'"></div>';
    return $show_comments;
   }
   else {
