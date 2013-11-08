@@ -2,8 +2,8 @@
 /*
 Plugin Name: Facebook All
 Plugin URI: http://www.sourceaddons.com/
-Description: Allow your visitors to <strong>comment, login, register and share with facebook </strong> also post on their facebook wall.
-Version: 1.2
+Description: Allow your visitors to <strong>comment, login, register and share with facebook and google </strong> also post on their facebook wall.
+Version: 1.3
 Author: sourceaddons
 Author URI: http://www.sourceaddons.com/
 License: GPL2
@@ -44,6 +44,24 @@ function facebookall_front_scripts() {
   wp_print_scripts( "connect_js" );
   //wp_enqueue_script('connect_js');
 }
+
+function facebookall_fbmlsetup() {
+  $fball_settings = get_option('fball_settings');
+  if (!empty($fball_settings['apikey']) || !empty($fball_settings['recbar_appid']) || !empty($fball_settings['comment_appid'])) {
+    $appid = (!empty($fball_settings['apikey']) ? $fball_settings['apikey'] : $fball_settings['comment_appid']);
+    $appid = (!empty($appid) ? $appid : $fball_settings['recbar_appid']);
+  }?>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $appid; ?>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<?php }
+add_action('wp_head', 'facebookall_fbmlsetup', 100);
+
 add_action ('login_head', 'facebookall_front_scripts');
 add_action ('wp_head', 'facebookall_front_scripts');
 

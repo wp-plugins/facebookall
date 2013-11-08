@@ -6,21 +6,14 @@
 function facebookall_get_fb_comments() {
   $fball_settings = get_option('fball_settings');
   if ($fball_settings['enablecomments'] == '1') {
-		  $comment_script = '<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId='.$fball_settings['comment_appid'].'";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, "script", "facebook-jssdk"));</script>';
+		  
     $show_comments = '';
       if (!empty($fball_settings['comment_title'])) {
 	    $show_comments .= '<div style="margin:0"><b>'.ucfirst($fball_settings['comment_title']).'</b></div>';
 	  }
    if ($fball_settings['comment_color'] == '0') {$colorscheme = 'dark';}
    else {$colorscheme = 'light';}
-   $show_comments .= $comment_script.'<div class="fb-comments" data-href="'. facebookall_get_current_url() .'" data-width="'.$fball_settings['comment_width'].'" data-num-posts="'.$fball_settings['comment_numpost'].'" data-colorscheme="'.$colorscheme.'"></div>';
+   $show_comments .= '<div class="fb-comments" data-href="'. facebookall_get_current_url() .'" data-width="'.$fball_settings['comment_width'].'" data-num-posts="'.$fball_settings['comment_numpost'].'" data-colorscheme="'.$colorscheme.'"></div>';
    return $show_comments;
   }
   else {
@@ -73,16 +66,18 @@ global $post;
     $output = "";
    
 	//Output
-    $output .= "<style>.fballshare_left {float:left}.fballshare {margin:0px;text-align:center}.fball_fblike{width:95px;}.fball_pinterest, .fball_linkedin, .fball_digg {margin-right:10px;} .fballshare .fball_fblike span{width: 535px!important;}";
+    $output .= "<style>.fballshare_left {float:left}.fballshare {margin:0px;text-align:center}.fball_fblike{width:105px;}.fball_pinterest, .fball_linkedin, .fball_digg {margin-right:10px;} .fballshare .fball_fblike span{width: 535px!important;}";
 	if($layout_style=='1') {
-	$output .= ".fball_plusone {width:70px}.fball_twitter {width:106px}.fball_digg {margin-left:25px}";
+	$output .= ".fball_plusone {width:70px;margin-top:5px;}.fball_twitter {width:90px;margin-top:5px;}.fball_digg {margin-left:25px;margin-top:5px;}.fball_pinterest, .fball_linkedin{margin-top:5px;}";
 	 } 
 	 else {
-	 $output .= ".fball_twitter {width:66px}.fball_plusone {width:62px;margin-left:5px}.fball_pinterest{margin-top:20px}";
+	 $output .= ".fball_fblike{width:70px;margin-top:1px;}.fball_twitter {width:66px;}.fball_plusone {width:62px;margin-left:5px}.fball_pinterest{margin-top:20px}";
 	 }
 	 
 $output .="</style><div class='fballshare'>";
-    
+    if ($fball_settings['share_facebook']== '1' ) {
+	    $output .= "<div class='fball_fblike fballshare_left'><div class='fb-share-button' data-href='" . get_permalink() . "' data-type='" . $like_btn_style . "'></div></div>";
+    }
     if ($fball_settings['share_linkedin']== '1') {
       $output .= "<div class='fball_linkedin fballshare_left'><script type='IN/Share' data-url=" . get_permalink() . " data-counter='" . $linkedin_style . "'></script></div>";
 	  }
@@ -105,16 +100,6 @@ $output .="</style><div class='fballshare'>";
 					})();</script>";
       $output .= "<div class='fball_digg fballshare_left'><a class='DiggThisButton " . $digg_style . "' href='http://digg.com/submit?url='".get_permalink()."'></a></div>";
 	  }
-	  if ($fball_settings['share_facebook']== '1' ) {
-	  $output .= "<script>(function(d){
-					  var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-					  js = d.createElement('script'); js.id = id; js.async = true;
-					  js.src = '//connect.facebook.net/en_US/all.js#xfbml=1';
-					  d.getElementsByTagName('head')[0].appendChild(js);
-					}(document));</script>";
-					
-	    $output .= "<div class='fball_fblike fballshare_left'><div class='fb-like' data-href='" . get_permalink() . "' data-send='false' data-layout='" . $like_btn_style . "' data-width='120' data-show-faces='false'></div></div>";
-    }
       $output .="<div style='clear:both'></div></div>";
 	  $sharetitle = '';
 	  if (!empty($fball_settings['share_title'])) {

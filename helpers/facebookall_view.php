@@ -7,11 +7,11 @@ function facebookall_render_facebook_button() {
   $fball_button = '<div class="fball_ui">
         <div class="fball_form" title="Facebook All">';
 		if (!empty($fball_settings ['custom_button'])) {
-		  $fball_button .= '<a href="javascript:void(0);" title="Login using Facebook" onclick="FbAll.facebookLogin();" class="fball_login_facebook"><img src="'.$fball_settings ['custom_button'].'" style="cursor:pointer;"></a>';
+		  $fball_button .= '<a href="javascript:void(0);" title="Login with Facebook" onclick="FbAll.facebookLogin();" class="fball_login_facebook"><img src="'.$fball_settings ['custom_button'].'" style="cursor:pointer;"></a>';
 		}
 		else {
 		  $fball_button .= '<span id="fball-facebook-login">
-        <a href="javascript:void(0);" title="Login using Facebook" onclick="FbAll.facebookLogin();" class="fball_login_facebook"><span>'.$fball_settings ['fbicon_text'].'</span></a></span>';
+        <a href="javascript:void(0);" title="Login with Facebook" onclick="FbAll.facebookLogin();" class="fball_login_facebook"><span>'.$fball_settings ['fbicon_text'].'</span></a></span>';
 		}
 	$fball_button .= '</div>
         <div id="fball_facebook_auth">
@@ -40,7 +40,8 @@ function facebookall_render_widget_button() {
 		}
 		echo "</div><div style='float:left; margin-left:10px;padding:1px;'>"; 
 		echo $user->user_login;
-		echo '<br/><a href="'.wp_logout_url().'">'; _e('Log Out', 'facebookall');'</a></div></div>'; 
+		echo '<br/><a href="'.wp_logout_url().'">'; _e('Log Out', 'facebookall');
+		echo '</a></div><div style="clear:both;"></div></div>'; 
 	}
 	else {
 	  facebookall_render_facebook_button();
@@ -146,24 +147,23 @@ function facebookall_render_fanbox() {
  */
 function facebookall_render_facepile() {
   $fball_settings = get_option('fball_settings');?>
-<iframe src="//www.facebook.com/plugins/facepile.php?href=<?php echo urlencode($fball_settings['facepile_pageurl'])?>&amp;size=<?php if($fball_settings['facepile_size'] == '0') { echo 'small';}elseif($fball_settings['facepile_size'] == '1') {echo 'medium';}else {echo 'large';}?>&amp;max_rows=<?php echo $fball_settings['facepile_numrows']?>&amp;width=<?php echo $fball_settings['facepile_width']?>&amp;colorscheme=<?php if($fball_settings['facepile_color'] == '1') { echo 'light';}else {echo 'dark';}?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:<?php echo $fball_settings['facepile_width']?>px;" allowTransparency="true"></iframe>
+  <div class="fb-facepile" data-href="<?php echo trim($fball_settings['facepile_pageurl'])?>" data-width="<?php echo $fball_settings['facepile_width']?>" data-max-rows="<?php echo $fball_settings['facepile_numrows']?>" data-colorscheme="<?php if($fball_settings['facepile_color'] == '1') { echo 'light';}else {echo 'dark';}?>" data-size="<?php if($fball_settings['facepile_size'] == '0') { echo 'small';}elseif($fball_settings['facepile_size'] == '1') {echo 'medium';}else {echo 'large';}?>" data-show-count="true"></div>
 <?php }
 
 /*
  * Create recommendations bar.
  */
-function facebookall_render_recommendbar() {
+function facebookall_render_recommendbar($content) {
   $fball_settings = get_option('fball_settings');
-  if ($fball_settings['enable_recbar'] == '1') {
-  ?>
- <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $fball_settings['recbar_appid'];?>";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-recommendations-bar" data-site="<?php echo $fball_settings['recbar_pageurl'];?>" data-trigger="onvisible" data-read-time="<?php echo $fball_settings['recbar_readtime'];?>" data-action="<?php if($fball_settings['recbar_verb'] == '1') { echo 'like';}else {echo 'recommend';}?>" data-side="<?php if($fball_settings['recbar_side'] == '1') { echo 'left';}else {echo 'right';}?>"></div>
-<?php }}
-add_action('wp_footer','facebookall_render_recommendbar');
+  if ($fball_settings['enable_recbar'] == '1') { 
+  $side = ($fball_settings['recbar_side'] == '1' ? 'left' : 'right');
+  $verb = ($fball_settings['recbar_verb'] == '1' ? 'like' : 'recommend');
+if ((is_single() && $fball_settings['rec_posts'] == '1') ||
+      (is_page() && $fball_settings['rec_pages'] == '1') ||
+      ((is_home() || is_front_page()) && $fball_settings['rec_home'] == '1')) {
+		$content .= "<div class=\"fb-recommendations-bar\" data-href=\"".get_permalink()."\" data-read-time=\"".$fball_settings['recbar_readtime']."\" data-side=\"".$side."\" data-action=\"".$verb."\"></div>";
+     }
+return $content;
+ }
+}
+add_filter ('the_content', 'facebookall_render_recommendbar', 1);

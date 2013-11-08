@@ -1,9 +1,9 @@
 === Facebook All ===
 Contributors: sourceaddons, patrykos360 (Language translator - polish)
-Tags: Facebook Login, Facebook Connect, social login, social share, facebook fanbox, facebook comments, facebook facepile, Facebook Login For Wordpress, facebook all, facebook social plugins, Facebook Analytics, Facebook
+Tags: Facebook Login, Facebook Connect, Social Login, Social Share, facebook fanbox, facebook comments, facebook facepile, Facebook Login For Wordpress, facebook all, facebook social plugins, Facebook Analytics, Facebook, Google Login, Google Login For Wordpress, Google Connect
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,19 +13,20 @@ Make your blog fully social with facebook social plugins and allow your visitor 
 
 
 The Facebook All Plugin is a collection of facebook social plugins for Wordpress. that allows your visitors to comment, 
-login and register with social networks Facebook. 
+login and register with social networks Facebook and google. 
 <strong>Make your blog social!</strong><br />
 
 <strong>Its includes:</strong>
 
 <ul>
- <li>Facebook Analytics(Premium Feature)</li><li>Woocommerce compatible(Premium Feature)</li><li>Available in Languages (German, Polish)</li><li>Facebook Login</li><li>Facebook Fanbox</li> <li>Facebook Facepile</li><li>Facebook Comments</li><li>Facebook Recommendations Bar</li><li>Social Sharing</li></ul>
+ <li>Google Login(Premium Feature)</li><li>Facebook Analytics(Premium Feature)</li><li>Woocommerce compatible(Premium Feature)</li><li>Available in Languages (German, Polish)</li><li>Facebook Login</li><li>Facebook Fanbox</li> <li>Facebook Facepile</li><li>Facebook Comments</li><li>Facebook Recommendations Bar</li><li>Social Sharing</li></ul>
 
 
 <strong>Features:</strong>
 
 <ul>
  <li>Choose where to show facebook login.</li><li>optioally redirect user after login.</li> <li>User friendly admin interface</li><li>Easy to configure</li><li>Rich profile data</li><li>Buddypress compatible</li><li>All faceook socialplugins in one pack</li><li>Fully customizable facebook icon</li><li>Many more...</li></ul>
+For Demo :- <a href="http://wp.sourceaddons.com/">FacebookAll Demo</a>
 This plugin is maintained by sourceaddons. for any tech support or any customization please contact <a href="http://www.sourceaddons.com">sourceaddons</a> or write a email to us on sourceaddons@ymail.com 
 
 == Installation ==
@@ -115,3 +116,14 @@ Answer to foo bar dilemma.
 3. Woocommerce compatible..
 4. localization for facebook social plugins added.
 5. Available in Languages (German, Polish)
+
+= 1.3 =
+* Recommendations bar bug fixed.
+* Fixed widget conflict with theme.
+* Fixed wall post settings bug.
+* Added facebook share button.
+* premium features added :-
+1. Google Login added.
+2. Option for choose language for facebook plugins.
+3. Login icon enhanced.
+

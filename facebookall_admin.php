@@ -93,14 +93,13 @@ function facebookall_save_admin_settings($fball_settings) {
   $fball_settings['facepile_color'] = ((isset($fball_settings['facepile_color']) && in_array($fball_settings['facepile_color'], array('1', '0'))) ? $fball_settings['facepile_color'] : '1');
   $fball_settings['facepile_size'] = ((isset($fball_settings['facepile_size']) && in_array($fball_settings['facepile_size'], array('0', '1', '2'))) ? $fball_settings['facepile_size'] : '1');
   $fball_settings['enable_recbar'] = ((isset($fball_settings['enable_recbar']) && in_array($fball_settings['enable_recbar'], array('1', '0'))) ? $fball_settings['enable_recbar'] : '0');
-  $fball_settings['recbar_pageurl'] = trim($fball_settings['recbar_pageurl']);
   $fball_settings['recbar_readtime'] = trim($fball_settings['recbar_readtime']);
   $fball_settings['recbar_appid'] = trim($fball_settings['recbar_appid']);
-  $fball_settings['recbar_verb'] = ((isset($fball_settings['recbar_verb']) && in_array($fball_settings['recbar_verb'], array('1', '0'))) ? $fball_settings['facepile_color'] : '1');
-  $fball_settings['recbar_side'] = ((isset($fball_settings['recbar_side']) && in_array($fball_settings['recbar_side'], array('0', '1'))) ? $fball_settings['facepile_size'] : '1');
+  $fball_settings['recbar_verb'] = ((isset($fball_settings['recbar_verb']) && in_array($fball_settings['recbar_verb'], array('1', '0'))) ? $fball_settings['recbar_verb'] : '1');
+  $fball_settings['recbar_side'] = ((isset($fball_settings['recbar_side']) && in_array($fball_settings['recbar_side'], array('0', '1'))) ? $fball_settings['recbar_side'] : '1');
 
   
-	foreach(array('loginpage', 'registerpage', 'commentpage', 'comment_top', 'comment_bottom', 'comment_homepage', 'comment_posts', 'comment_pages', 'comment_postecerpts', 'comment_archives', 'comment_feed', 'share_facebook','share_linkedin', 'share_twitter', 'share_pin', 'share_gplus', 'share_digg', 'share_top', 'share_bottom', 'share_home','share_posts', 'share_pages', 'share_postexcerpts', 'share_archives', 'share_feed') as $val){
+	foreach(array('loginpage', 'registerpage', 'commentpage', 'comment_top', 'comment_bottom', 'comment_homepage', 'comment_posts', 'comment_pages', 'comment_postecerpts', 'comment_archives', 'comment_feed', 'share_facebook','share_linkedin', 'share_twitter', 'share_pin', 'share_gplus', 'share_digg', 'share_top', 'share_bottom', 'share_home','share_posts', 'share_pages', 'share_postexcerpts', 'share_archives', 'share_feed', 'rec_posts', 'rec_pages', 'rec_home') as $val){
 		
 	}
 	return $fball_settings;
@@ -117,8 +116,8 @@ function facebookall_admin_settings() {
       <br>
       </div>
       <h2><?php _e('Facebook All Admin Settings', 'facebookall');?></h2><br />
-	  <div style="background-color: #FFFFE0; border:1px solid #E6DB55; padding:5px; margin-bottom:5px; width: 1060px; font-size:13px;">
-			 <?php _e('Please upgrade your plugin with more new feature ...', 'facebookall') ?> <a target="_blank" href="http://www.sourceaddons.com/wp_feature.php" >  <?php _e('click here', 'facebookall') ?> </a>.
+	  <div style=" border:1px solid #f00; padding:5px; margin-bottom:5px; width: 1060px; font-size:13px; font-weight:bold; color:#FF0000;" class="fball_updatemsg_box">
+			 <?php _e('Please upgrade your plugin google login and more new feature ...', 'facebookall') ?> <a target="_blank" href="http://www.sourceaddons.com/" >  <?php _e('click here', 'facebookall') ?> </a>.
 		</div>
       <div id="fballwelcome-panel" class="fballwelcome-panel">
         <div class="fballwelcome-panel-content">
@@ -367,7 +366,7 @@ function facebookall_admin_settings() {
                        </tr>
                       <tr class="fballrow_white">
                        <th scope="fballrow"><?php _e('Post Message','facebookall');?></th>
-                       <td><textarea rows="3" cols="87"  name="fball_settings[new_post_message]" value="<?php echo (isset($fball_settings['new_post_message']) ? htmlspecialchars ($fball_settings['new_post_message']) : ''); ?>"/></textarea></td>
+                       <td><textarea rows="3" cols="87"  name="fball_settings[new_post_message]"><?php echo (isset($fball_settings['new_post_message']) ? htmlspecialchars ($fball_settings['new_post_message']) : ''); ?></textarea></td>
                        </tr>
                        <tr >
                         <th scope="fballrow"><?php _e('Post Picture Url','facebookall');?></th>
@@ -377,7 +376,7 @@ function facebookall_admin_settings() {
                          <tr >
                          <th scope="fballrow"><?php _e('Post Description','facebookall');?></th>
                          <td>
-                         <textarea rows="3" cols="87"  name="fball_settings[new_post_desc]" value="<?php echo (isset($fball_settings['new_post_desc']) ? htmlspecialchars ($fball_settings['new_post_desc']) : ''); ?>"/></textarea></td>
+                         <textarea rows="3" cols="87"  name="fball_settings[new_post_desc]"><?php echo (isset($fball_settings['new_post_desc']) ? htmlspecialchars ($fball_settings['new_post_desc']) : ''); ?></textarea></td>
                         </tr>
                          </table>
 						 <table class="form-table facebookall_table">
@@ -407,7 +406,7 @@ function facebookall_admin_settings() {
                        </tr>
                       <tr class="fballrow_white">
                        <th scope="fballrow"><?php _e('Post Message','facebookall');?></th>
-                       <td><textarea rows="3" cols="87"  name="fball_settings[old_post_message]" value="<?php echo (isset($fball_settings['old_post_message']) ? htmlspecialchars ($fball_settings['old_post_message']) : ''); ?>"/></textarea></td>
+                       <td><textarea rows="3" cols="87"  name="fball_settings[old_post_message]"><?php echo (isset($fball_settings['old_post_message']) ? htmlspecialchars ($fball_settings['old_post_message']) : ''); ?></textarea></td>
                        </tr>
                        <tr >
                         <th scope="fballrow"><?php _e('Post Picture Url','facebookall');?></th>
@@ -417,7 +416,7 @@ function facebookall_admin_settings() {
                          <tr >
                          <th scope="fballrow"><?php _e('Post Description','facebookall');?></th>
                          <td>
-                         <textarea rows="3" cols="87"  name="fball_settings[old_post_desc]" value="<?php echo (isset($fball_settings['old_post_desc']) ? htmlspecialchars ($fball_settings['old_post_desc']) : ''); ?>"/></textarea></td>
+                         <textarea rows="3" cols="87"  name="fball_settings[old_post_desc]"><?php echo (isset($fball_settings['old_post_desc']) ? htmlspecialchars ($fball_settings['old_post_desc']) : ''); ?></textarea></td>
                         </tr>
                          </table>
                          </div>
@@ -693,11 +692,14 @@ function facebookall_admin_settings() {
                          <td><input name="fball_settings[enable_recbar]" type="radio" <?php echo $yesenable_recbar;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                          <input name="fball_settings[enable_recbar]" type="radio" <?php echo $noenable_recbar;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?></td>
                        </tr>
-						 <tr >
-                        <th scope="fballrow"><?php _e('Domain','facebookall');?></th>
-                         <td><input size="90" type="text" name="fball_settings[recbar_pageurl]" value="<?php echo (isset($fball_settings['recbar_pageurl']) ? htmlspecialchars ($fball_settings['recbar_pageurl']) : ''); ?>"/></td>
-                       </tr>
-                          <tr >
+						 <tr>
+                         <th scope="fballrow"><?php _e('Show Recommendations Bar On', 'facebookall');?></th>
+                         <td>
+                         <input type="checkbox"  name="fball_settings[rec_posts]" value="1" <?php echo isset($fball_settings['rec_posts']) && $fball_settings['rec_posts'] == 1 ? 'checked' : '' ?> /> &nbsp;&nbsp;<label><?php _e('Posts', 'facebookall');?></label><br />
+						 <input type="checkbox"  name="fball_settings[rec_pages]" value="1" <?php echo isset($fball_settings['rec_pages']) && $fball_settings['rec_pages'] == 1 ? 'checked' : '' ?> /> &nbsp;&nbsp;<label><?php _e('Pages', 'facebookall');?></label><br />
+                         <input type="checkbox"  name="fball_settings[rec_home]" value="1" <?php echo isset($fball_settings['rec_home']) && $fball_settings['rec_home'] == 1 ? 'checked' : '' ?> /> &nbsp;&nbsp;<label><?php _e('Home Page', 'facebookall');?></label>
+                        </td>
+                        </tr>                          <tr >
                         <th scope="fballrow"><?php _e('Read Time','facebookall');?></th>
                          <td><input size="90" type="text" name="fball_settings[recbar_readtime]" value="<?php echo (isset($fball_settings['recbar_readtime']) ? htmlspecialchars ($fball_settings['recbar_readtime']) : '30'); ?>"/></td>
                        </tr>
