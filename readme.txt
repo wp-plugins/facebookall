@@ -127,7 +127,7 @@ Answer to foo bar dilemma.
 2. Option for choose language for facebook plugins.
 3. Login icon enhanced.
 
-= 1.3 =
+= 1.4 =
 * fixed content not appearing issue.
 
 
