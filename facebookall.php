@@ -3,7 +3,7 @@
 Plugin Name: Facebook All
 Plugin URI: http://www.sourceaddons.com/
 Description: Allow your visitors to <strong>comment, login, register and share with facebook and google </strong> also post on their facebook wall.
-Version: 1.3
+Version: 1.4
 Author: sourceaddons
 Author URI: http://www.sourceaddons.com/
 License: GPL2
