@@ -3,9 +3,18 @@ function facebookall_make_userlogin() {
   $fball_settings = get_option('fball_settings');
   if (isset($_GET['code']) AND !empty($_GET['code'])) {
     $code = $_GET['code'];
-    parse_str(facebookall_get_fb_contents("https://graph.facebook.com/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url()) .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code)));
-	if(empty($access_token)) {
-	  parse_str(facebookall_get_fb_contents("https://graph.facebook.com/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url().'/') .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code)));
+    $get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url()) .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
+    $access_data = json_decode($get_access_data, true);
+	  if(empty($access_data['access_token'])) {
+	    $get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url().'/') .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
+      $access_data = json_decode($get_access_data, true);
+    }
+    if(!empty($access_data['access_token'])){
+      $access_token = $access_data['access_token'];
+    }
+    else{
+      echo 'Error : Could not get access token please check your app settings for more about this error<br> Or Follow our doc setion <a href="http://sourceaddons.com/documentation">Documentation Section</a>.';
+      exit;
     }
 	?>
 	<script>
@@ -14,7 +23,7 @@ function facebookall_make_userlogin() {
 		 </script>
   <?php }
   if(!empty($_REQUEST['fball_access_token']) AND isset($_REQUEST['fball_redirect'])) {
-    $fbuser_info = json_decode(facebookall_get_fb_contents("https://graph.facebook.com/me?access_token=".$_REQUEST['fball_access_token']));
+    $fbuser_info = json_decode(facebookall_get_fb_contents("https://graph.facebook.com/v2.3/me?access_token=".$_REQUEST['fball_access_token']));
     $fbdata = facebookall_get_fbuserprofile_data($fbuser_info);
     if (!empty($fbdata['email']) AND !empty($fbdata['id'])) {
       // Filter username form data.
@@ -63,7 +72,7 @@ function facebookall_make_userlogin() {
 							'user_url' => $fbdata['website'],
 							'user_pass' => $user_password,
 							'description' => $fbdata['aboutme'],
-			                'role' => $user_role
+			        'role' => $user_role
 						);
            $user_id = wp_insert_user ($user_data);
            if (is_numeric ($user_id)) {
@@ -107,17 +116,23 @@ function facebookall_make_userlogin() {
     $fball_settings = get_option('fball_settings');
     if ($fball_settings['connection_handler'] == 'curl') {
       $curl = curl_init();
-	  curl_setopt( $curl, CURLOPT_URL, $url );
-	  curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-	  curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
+      curl_setopt( $curl, CURLOPT_URL, $url );
+      curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+      curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
       $response = curl_exec( $curl );
       curl_close( $curl );
+    }
+    else {
+      $response = @file_get_contents($url);
+    }
+    $result = json_decode($response);
+    if(!empty($result->error)){
+      echo $response.'<br> For More about Facebook api error codes <a href="https://developers.facebook.com/docs/graph-api/using-graph-api/#errors" target="_blank">Faceook API Error Handling</a>.';
+      exit;
+    }
+    else{
       return $response;
     }
-	else {
-	   $response = @file_get_contents($url);
-	   return $response;
-	}
   }
 
 /*
@@ -144,14 +159,14 @@ function facebookall_make_userlogin() {
  */
   function facebookall_get_fbuserprofile_data($fbuser_info) {
      $fbdata['id'] = (!empty($fbuser_info->id) ? $fbuser_info->id : '');
-	 $fbdata['first_name'] = (!empty($fbuser_info->first_name) ? $fbuser_info->first_name : '');
+	   $fbdata['first_name'] = (!empty($fbuser_info->first_name) ? $fbuser_info->first_name : '');
      $fbdata['last_name'] = (!empty($fbuser_info->last_name) ? $fbuser_info->last_name : '');
-	 $fbdata['name'] = (!empty($fbuser_info->name) ? $fbuser_info->name : '');
-	 $fbdata['email'] = (!empty($fbuser_info->email) ? $fbuser_info->email : '');
+	   $fbdata['name'] = (!empty($fbuser_info->name) ? $fbuser_info->name : '');
+	   $fbdata['email'] = (!empty($fbuser_info->email) ? $fbuser_info->email : '');
      $fbdata['thumbnail'] = "https://graph.facebook.com/" . $fbdata['id'] . "/picture";
      $fbdata['aboutme'] = (!empty($fbuser_info->bio) ? $fbuser_info->bio : "");
-	 $fbdata['website'] = (!empty( $fbuser_info->link) ? $fbuser_info->link : "");
-	 return $fbdata;
+	   $fbdata['website'] = (!empty( $fbuser_info->link) ? $fbuser_info->link : "");
+     return $fbdata;
   }
   
 /**

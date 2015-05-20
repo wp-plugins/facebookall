@@ -26,8 +26,8 @@ add_action('admin_init', 'facebookall_register_admin_options');
 /**
  * Function that getting app result from facebook.
  */
-function facebookall_getapp_result($apikey) {
-  $url = "https://graph.facebook.com/".$apikey;
+function facebookall_getapp_result($apikey, $apisecret) {
+  $url = "https://graph.facebook.com/v2.3/".$apikey."?access_token=".$apikey.'|'.$apisecret;
   if (function_exists('curl_init')) {
     $curl = curl_init();
     curl_setopt( $curl, CURLOPT_URL, $url);
@@ -83,23 +83,22 @@ function facebookall_save_admin_settings($fball_settings) {
   $fball_settings['fanbox_pageurl'] = trim($fball_settings['fanbox_pageurl']);
   $fball_settings['fanbox_width'] = trim($fball_settings['fanbox_width']);
   $fball_settings['fanbox_height'] = trim($fball_settings['fanbox_height']);
-  $fball_settings['fanbox_color'] = ((isset($fball_settings['fanbox_color']) && in_array($fball_settings['fanbox_color'], array('1', '0'))) ? $fball_settings['fanbox_color'] : '1');
+  $fball_settings['fanbox_posts'] = ((isset($fball_settings['fanbox_posts']) && in_array($fball_settings['fanbox_posts'], array('1', '0'))) ? $fball_settings['fanbox_posts'] : '1');
   $fball_settings['fanbox_faces'] = ((isset($fball_settings['fanbox_faces']) && in_array($fball_settings['fanbox_faces'], array('1', '0'))) ? $fball_settings['fanbox_faces'] : '1');
-  $fball_settings['fanbox_stram'] = ((isset($fball_settings['fanbox_stram']) && in_array($fball_settings['fanbox_stram'], array('1', '0'))) ? $fball_settings['fanbox_stram'] : '0');
-  $fball_settings['fanbox_header'] = ((isset($fball_settings['fanbox_header']) && in_array($fball_settings['fanbox_header'], array('1', '0'))) ? $fball_settings['fanbox_header'] : '0');
-  $fball_settings['facepile_pageurl'] = trim($fball_settings['facepile_pageurl']);
-  $fball_settings['facepile_width'] = trim($fball_settings['facepile_width']);
-  $fball_settings['facepile_numrows'] = trim($fball_settings['facepile_numrows']);
-  $fball_settings['facepile_color'] = ((isset($fball_settings['facepile_color']) && in_array($fball_settings['facepile_color'], array('1', '0'))) ? $fball_settings['facepile_color'] : '1');
-  $fball_settings['facepile_size'] = ((isset($fball_settings['facepile_size']) && in_array($fball_settings['facepile_size'], array('0', '1', '2'))) ? $fball_settings['facepile_size'] : '1');
-  $fball_settings['enable_recbar'] = ((isset($fball_settings['enable_recbar']) && in_array($fball_settings['enable_recbar'], array('1', '0'))) ? $fball_settings['enable_recbar'] : '0');
-  $fball_settings['recbar_readtime'] = trim($fball_settings['recbar_readtime']);
-  $fball_settings['recbar_appid'] = trim($fball_settings['recbar_appid']);
-  $fball_settings['recbar_verb'] = ((isset($fball_settings['recbar_verb']) && in_array($fball_settings['recbar_verb'], array('1', '0'))) ? $fball_settings['recbar_verb'] : '1');
-  $fball_settings['recbar_side'] = ((isset($fball_settings['recbar_side']) && in_array($fball_settings['recbar_side'], array('0', '1'))) ? $fball_settings['recbar_side'] : '1');
-
+  $fball_settings['fanbox_cover'] = ((isset($fball_settings['fanbox_cover']) && in_array($fball_settings['fanbox_cover'], array('1', '0'))) ? $fball_settings['fanbox_cover'] : '0');
+  $fball_settings['send_url'] = trim($fball_settings['send_url']);
+  $fball_settings['send_color'] = ((isset($fball_settings['send_color']) && in_array($fball_settings['send_color'], array('1', '0'))) ? $fball_settings['send_color'] : '1');
+  $fball_settings['follow_url'] = trim($fball_settings['follow_url']);
+  $fball_settings['follow_width'] = trim($fball_settings['follow_width']);
+  $fball_settings['follow_height'] = trim($fball_settings['follow_height']);
+  $fball_settings['follow_color'] = ((isset($fball_settings['follow_color']) && in_array($fball_settings['follow_color'], array('1', '0'))) ? $fball_settings['follow_color'] : '1');
+  $fball_settings['follow_faces'] = ((isset($fball_settings['follow_faces']) && in_array($fball_settings['follow_faces'], array('1', '0'))) ? $fball_settings['follow_faces'] : '1');
+  $fball_settings['follow_layout'] = ((isset($fball_settings['follow_layout']) && in_array($fball_settings['follow_layout'], array('standard', 'box_count', 'button_count', 'button'))) ? $fball_settings['follow_layout'] : 'standard');
+  $fball_settings['embed_url'] = trim($fball_settings['embed_url']);
+  $fball_settings['embed_width'] = trim($fball_settings['embed_width']);
   
-	foreach(array('loginpage', 'registerpage', 'commentpage', 'comment_top', 'comment_bottom', 'comment_homepage', 'comment_posts', 'comment_pages', 'comment_postecerpts', 'comment_archives', 'comment_feed', 'share_facebook','share_linkedin', 'share_twitter', 'share_pin', 'share_gplus', 'share_digg', 'share_top', 'share_bottom', 'share_home','share_posts', 'share_pages', 'share_postexcerpts', 'share_archives', 'share_feed', 'rec_posts', 'rec_pages', 'rec_home') as $val){
+  
+	foreach(array('loginpage', 'registerpage', 'commentpage', 'comment_top', 'comment_bottom', 'comment_homepage', 'comment_posts', 'comment_pages', 'comment_postecerpts', 'comment_archives', 'comment_feed', 'share_facebooklike', 'share_facebook','share_linkedin', 'share_twitter', 'share_pin', 'share_gplus', 'share_top', 'share_bottom', 'share_home','share_posts', 'share_pages', 'share_postexcerpts', 'share_archives', 'share_feed') as $val){
 		
 	}
 	return $fball_settings;
@@ -116,7 +115,7 @@ function facebookall_admin_settings() {
       <br>
       </div>
       <h2><?php _e('Facebook All Admin Settings', 'facebookall');?></h2><br />
-	  <div style=" border:1px solid #f00; padding:5px; margin-bottom:5px; width: 1060px; font-size:13px; font-weight:bold; color:#FF0000;" class="fball_updatemsg_box">
+	  <div style=" border:1px solid #f00; padding:5px; margin-bottom:5px; width: 100%; font-size:13px; font-weight:bold; color:#FF0000;" class="fball_updatemsg_box">
 			 <?php _e('Please upgrade your plugin google login and more new feature ...', 'facebookall') ?> <a target="_blank" href="http://www.sourceaddons.com/" >  <?php _e('click here', 'facebookall') ?> </a>.
 		</div>
       <div id="fballwelcome-panel" class="fballwelcome-panel">
@@ -134,9 +133,9 @@ function facebookall_admin_settings() {
         </div>
 		<div class="fballwelcome-panel-column">
         <h4><?php _e('Your Facebook App Info:', 'facebookall');?></h4>
-		<?php if (!empty($fball_settings['apikey'])) {
-		        $app_result = facebookall_getapp_result($fball_settings['apikey']);
-				$app_id = (!empty($app_result->id) ? $app_result->id : "");
+		<?php if (!empty($fball_settings['apikey']) && !empty($fball_settings['apisecret'])) {
+		        $app_result = facebookall_getapp_result($fball_settings['apikey'], $fball_settings['apisecret']);
+				        $app_id = (!empty($app_result->id) ? $app_result->id : "");
                 $app_name = (!empty($app_result->name) ? $app_result->name : "");
                 $app_url = (!empty($app_result->link) ? $app_result->link : "");
                 $app_icon = (!empty($app_result->icon_url) ? $app_result->icon_url : "");
@@ -145,12 +144,12 @@ function facebookall_admin_settings() {
                 $app_weak_users = (!empty($app_result->weekly_active_users) ? $app_result->weekly_active_users : "0");
                 $app_month_users = (!empty($app_result->monthly_active_users) ? $app_result->monthly_active_users : "0");
               }?>
-              <div style="float:left; width:615px;">
+              <div style="float:left; width:100%;">
                 <div>
                     
 					<?php if (!empty($app_id)) {?>
-                     <div style="float:left;width:80px"> <img src="<?php echo $app_logo;?>" /> </div>
-                      <div style="float: right; margin: 0 0 0 20px">
+                     <div style="float:left;width:10%"> <img src="<?php echo $app_logo;?>" /> </div>
+                      <div style="float: left; margin: 0 0 0 50px">
                        <p style="margin:0 0 5px 0;"><?php _e('Application ID:', 'facebookall');?> <b><?php echo $app_id;?></b></p>
                        <p style="margin:0 0 5px 0;"><?php _e('Application Name:', 'facebookall');?> <b><?php echo $app_name;?></b></p>
                        <p style="margin:0 0 5px 0;"><?php _e('Site URL:', 'facebookall');?> <b><?php echo site_url();?></b></p>
@@ -159,7 +158,7 @@ function facebookall_admin_settings() {
                       </div>
                       
                     <?php } else {?>
-                       <p style="margin:0 0 5px 0; color:#FF0000; width:500px;"><?php printf (__ ('Not get any configured app info for your site. You have not saved api key and secret still or please %s and make sure cURL/FSOCKOPEN is enabled in your php.ini', 'facebookall'),'<a href="http://developers.facebook.com/" target="_blank">configure facebook app</a>');?></p>
+                       <p style="margin:0 0 5px 0; color:#FF0000; width:100%;"><?php printf (__ ('Not get any configured app info for your site. You have not saved api key and secret still or please %s and make sure cURL/FSOCKOPEN is enabled in your php.ini', 'facebookall'),'<a href="http://developers.facebook.com/" target="_blank">configure facebook app</a>');?></p>
                     <?php }?>
 					</div>
                  </div>
@@ -179,11 +178,11 @@ function facebookall_admin_settings() {
 						<li style="margin-left:9px"><a style="margin:0" class="nav-tab" href="#tabs-1"><?php _e('Basic Settings', 'facebookall');?></a></li>
 						<li><a style="margin:0" class="nav-tab" href="#tabs-2"><?php _e('Wall Post', 'facebookall') ?></a></li>
 						<li><a style="margin:0" class="nav-tab" href="#tabs-3"><?php _e('Comment/Share', 'facebookall') ?></a></li>
-						<li><a style="margin:0" class="nav-tab" href="#tabs-4"><?php _e('Fanbox/Faceplie', 'facebookall') ?></a></li>
-						<li><a style="margin:0" class="nav-tab" href="#tabs-5"><?php _e('Recommendations Bar', 'facebookall') ?></a></li>
+						<li><a style="margin:0" class="nav-tab" href="#tabs-4"><?php _e('Page Plugin/Embedded Posts', 'facebookall') ?></a></li>
+						<li><a style="margin:0" class="nav-tab" href="#tabs-5"><?php _e('Send/Follow', 'facebookall') ?></a></li>
                 </ul>
 			</h2>
-				<div style="float:left; width:70%;">
+				<div class="main-container">
 				<form action="options.php" method="post">
 				<?php settings_fields('facebookall_admin_configration'); ?>
 					<div id="tabs-1">
@@ -339,9 +338,13 @@ function facebookall_admin_settings() {
 
                <!-- Wall post settings-->
 				<div id="tabs-2">
-                        <table class="form-table facebookall_table">
+                        <table class="facebookall_table">
                          <tr>
                          <th class="head" colspan="2"><?php _e('New User Wall/Status Settings','facebookall');?></th>
+                         </tr>
+                         <tr>
+                           <td colspan="2" style="color:red;"><?php printf (__ ('Note :- You must submit your app for Login Review to wall post work %s, Also need "publish_actions" permission to be add in "wp-content/plugins/facebookall/assets/js/fball_connect.js" in the scope variable.', 'facebookall'),'<a href="https://developers.facebook.com/docs/facebook-login/permissions/v2.3" target="_blank">More About Login Review</a>');?>
+                          </td>
                          </tr>
                          <tr>
                          <th><?php _e('Post on the new users wall','facebookall');?></th>
@@ -379,7 +382,7 @@ function facebookall_admin_settings() {
                          <textarea rows="3" cols="87"  name="fball_settings[new_post_desc]"><?php echo (isset($fball_settings['new_post_desc']) ? htmlspecialchars ($fball_settings['new_post_desc']) : ''); ?></textarea></td>
                         </tr>
                          </table>
-						 <table class="form-table facebookall_table">
+						 <table class="facebookall_table">
                          <tr>
                          <th class="head" colspan="2"><?php _e('Returning User Wall/Status Settings','facebookall');?></th>
                          </tr>
@@ -424,7 +427,7 @@ function facebookall_admin_settings() {
 					 
 					 <!-- comment settings -->				
 						<div id="tabs-3">
-                        <table class="form-table facebookall_table">
+                        <table class="facebookall_table">
                          <tr>
                          <th class="head" colspan="2"><?php _e('Facebook All Comments Settings','facebookall');?></th>
                          </tr>
@@ -493,7 +496,7 @@ function facebookall_admin_settings() {
                         </tr>
                         
                          </table>
-						 <table class="form-table facebookall_table">
+						 <table class="facebookall_table">
                          <tr>
                          <th class="head" colspan="2"><?php _e('Facebook All Share Settings','facebookall');?></th>
                          </tr>
@@ -528,13 +531,13 @@ function facebookall_admin_settings() {
                         <tr class="fballrow_white">
                          <th scope="fballrow"><?php _e('Enable Social Providers in Share','facebookall');?> </th>
                        <td>
-                         <input type="checkbox" name="fball_settings[share_facebook]" value="1"<?php echo isset($fball_settings['share_facebook']) && $fball_settings['share_facebook'] == 1 ? 'checked' : '' ?> />  <?php _e('Facebook Like Button','facebookall');?> <br /> 
+                       <input type="checkbox" name="fball_settings[share_facebooklike]" value="1"<?php echo isset($fball_settings['share_facebooklike']) && $fball_settings['share_facebooklike'] == 1 ? 'checked' : '' ?> />  <?php _e('Facebook Like Button','facebookall');?> <br /> 
+                         <input type="checkbox" name="fball_settings[share_facebook]" value="1"<?php echo isset($fball_settings['share_facebook']) && $fball_settings['share_facebook'] == 1 ? 'checked' : '' ?> />  <?php _e('Facebook Share Button','facebookall');?> <br /> 
 					   <input type="checkbox" name="fball_settings[share_linkedin]" value="1"<?php echo isset($fball_settings['share_linkedin']) && $fball_settings['share_linkedin'] == 1 ? 'checked' : '' ?> />  <?php _e('Linkedin Share Button','facebookall');?><br />
                          <input type="checkbox" name="fball_settings[share_twitter]" value="1"<?php echo isset($fball_settings['share_twitter']) && $fball_settings['share_twitter'] == 1 ? 'checked' : '' ?> />  <?php _e('Twitter Button','facebookall');?> <br /> 
 					     <input type="checkbox" name="fball_settings[share_pin]" value="1" <?php echo isset($fball_settings['share_pin']) && $fball_settings['share_pin'] == 1 ? 'checked' : '' ?> />  <?php _e('Pinterest Button','facebookall');?> <br />
                          <input type="checkbox" name="fball_settings[share_gplus]" value="1"<?php echo isset($fball_settings['share_gplus']) && $fball_settings['share_gplus'] == 1 ? 'checked' : '' ?> />  <?php _e('Googleplus Button','facebookall');?>  <br /> 
-					     <input type="checkbox" name="fball_settings[share_digg]" value="1"<?php echo isset($fball_settings['share_digg']) && $fball_settings['share_digg'] == 1 ? 'checked' : '' ?> />  <?php _e('Digg Button','facebookall');?>
-                       </td>
+					    </td>
                        </tr>
                       
 						<tr>
@@ -563,174 +566,168 @@ function facebookall_admin_settings() {
 					<!-- comment settings ends-->
 					<!-- Fanbox settings -->
 						<div id="tabs-4">
-                        <table class="form-table facebookall_table">
+                         <table class="facebookall_table">
                          <tr>
-                         <th class="head" colspan="2"><?php _e('Facebook All Fanbox Settings','facebookall');?></th>
+                         <th class="head" colspan="2"><?php _e('Facebook All Page Plugin Settings','facebookall');?></th>
                          </tr>
-						 <tr >
+             <tr >
                         <th scope="fballrow"><?php _e('Facebook Page Url','facebookall');?></th>
                          <td><input size="90" type="text" name="fball_settings[fanbox_pageurl]" value="<?php echo (isset($fball_settings['fanbox_pageurl']) ? htmlspecialchars ($fball_settings['fanbox_pageurl']) : ''); ?>"/></td>
                        </tr>
                           <tr >
-                        <th scope="fballrow"><?php _e('Fanbox Width','facebookall');?></th>
+                        <th scope="fballrow"><?php _e('Page Plugin Width','facebookall');?></th>
                          <td><input size="90" type="text" name="fball_settings[fanbox_width]" value="<?php echo (isset($fball_settings['fanbox_width']) ? htmlspecialchars ($fball_settings['fanbox_width']) : ''); ?>"/></td>
                        </tr>
-					   <tr class="fballrow_white">
-                        <th scope="fballrow"><?php _e('Fanbox Height','facebookall');?></th>
+             <tr class="fballrow_white">
+                        <th scope="fballrow"><?php _e('Page Plugin Height','facebookall');?></th>
                          <td><input size="90" type="text" name="fball_settings[fanbox_height]" value="<?php echo (isset($fball_settings['fanbox_height']) ? htmlspecialchars ($fball_settings['fanbox_height']) : ''); ?>"/></td>
                        </tr>
                       <tr class="fballrow_white">
-                         <th><?php _e('Color Scheme','facebookall');?></th>
+                         <th><?php _e('Show Page Posts','facebookall');?></th>
                           <td>
-						  <?php $fanboxlight = "";
-                               $fanboxdark = "";
-                               if($fball_settings["fanbox_color"] == "1") $fanboxlight = "checked='checked'";
-                               elseif($fball_settings["fanbox_color"] == "0") $fanboxdark = "checked='checked'";
-                               else $fanboxlight = "checked='checked'";?>
-                         <input name="fball_settings[fanbox_color]" type="radio" <?php echo $fanboxlight;?>value="1" />&nbsp;&nbsp;<?php _e('Light','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[fanbox_color]" type="radio" <?php echo $fanboxdark;?>value="0" />&nbsp;&nbsp;<?php _e('Dark','facebookall');?>
-						 </td>
+                        <?php $showfanboxposts = "";
+                               $nofanboxposts = "";
+                               if($fball_settings["fanbox_posts"] == "1") $showfanboxposts = "checked='checked'";
+                               elseif($fball_settings["fanbox_posts"] == "0") $nofanboxposts = "checked='checked'";
+                               else $showfanboxposts = "checked='checked'";?>
+                         <input name="fball_settings[fanbox_posts]" type="radio" <?php echo $showfanboxposts;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[fanbox_posts]" type="radio" <?php echo $nofanboxposts;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?>
+             </td>
                         </tr>
-						<tr>
-                         <th><?php _e('Show Faces','facebookall');?></th>
+            <tr>
+                         <th><?php _e('Show Friends Faces','facebookall');?></th>
                           <td>
-						  <?php $showfaces = "";
+                         <?php $showfaces = "";
                                $noshowfaces = "";
                                if($fball_settings["fanbox_faces"] == "1") $showfaces = "checked='checked'";
                                elseif($fball_settings["fanbox_faces"] == "0") $noshowfaces = "checked='checked'";
                                else $showfaces = "checked='checked'";?>
                          <input name="fball_settings[fanbox_faces]" type="radio" <?php echo $showfaces;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                          <input name="fball_settings[fanbox_faces]" type="radio" <?php echo $noshowfaces;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?>
-						 </td>
-                        </tr>
-                         <tr class="fballrow_white">
-                         <th><?php _e('Show Stream','facebookall');?></th>
-                          <td>
-						   <?php $showstram = "";
-                               $noshowstram = "";
-                               if($fball_settings["fanbox_stram"] == "1") $showstram = "checked='checked'";
-                               elseif($fball_settings["fanbox_stram"] == "0") $noshowstram = "checked='checked'";
-                               else $noshowstram = "checked='checked'";?>
-                         <input name="fball_settings[fanbox_stram]" type="radio" <?php echo $showstram;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[fanbox_stram]" type="radio" <?php echo $noshowstram;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?>
-						 </td>
+             </td>
                         </tr>
                           <tr class="fballrow_white">
-                         <th><?php _e('Show Header','facebookall');?></th>
+                         <th><?php _e('Hide Cover Photo','facebookall');?></th>
                           <td>
-						   <?php $showheader = "";
+                         <?php $showheader = "";
                                $noshowheader = "";
-                               if($fball_settings["fanbox_header"] == "1") $showheader = "checked='checked'";
-                               elseif($fball_settings["fanbox_header"] == "0") $noshowheader = "checked='checked'";
+                               if($fball_settings["fanbox_cover"] == "1") $showheader = "checked='checked'";
+                               elseif($fball_settings["fanbox_cover"] == "0") $noshowheader = "checked='checked'";
                                else $noshowheader = "checked='checked'";?>
-                         <input name="fball_settings[fanbox_header]" type="radio" <?php echo $showheader;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[fanbox_header]" type="radio" <?php echo $noshowheader;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?>
-						 </td>
+                         <input name="fball_settings[fanbox_cover]" type="radio" <?php echo $showheader;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[fanbox_cover]" type="radio" <?php echo $noshowheader;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?>
+             </td>
                         </tr>
                          </table>
-						 
-						 <table class="form-table facebookall_table">
+
+                         <table class="facebookall_table">
                          <tr>
-                         <th class="head" colspan="2"><?php _e('Facebook All Facepile Settings','facebookall');?></th>
+                         <th class="head" colspan="2"><?php _e('Facebook All Embedded Posts Settings','facebookall');?></th>
                          </tr>
-						 <tr >
-                        <th scope="fballrow"><?php _e('Facebook Page Url','facebookall');?></th>
-                         <td><input size="90" type="text" name="fball_settings[facepile_pageurl]" value="<?php echo (isset($fball_settings['facepile_pageurl']) ? htmlspecialchars ($fball_settings['facepile_pageurl']) : ''); ?>"/></td>
+             <tr >
+                        <th scope="fballrow"><?php _e('URL of post','facebookall');?></th>
+                         <td><input size="90" type="text" name="fball_settings[embed_url]" value="<?php echo (isset($fball_settings['embed_url']) ? htmlspecialchars ($fball_settings['embed_url']) : ''); ?>"/></td>
                        </tr>
                           <tr >
-                        <th scope="fballrow"><?php _e('Facebile Box Width','facebookall');?></th>
-                         <td><input size="90" type="text" name="fball_settings[facepile_width]" value="<?php echo (isset($fball_settings['facepile_width']) ? htmlspecialchars ($fball_settings['facepile_width']) : ''); ?>"/></td>
+                        <th scope="fballrow"><?php _e('The pixel width of the post (between 350 and 750)','facebookall');?></th>
+                         <td><input size="90" type="text" name="fball_settings[embed_width]" value="<?php echo (isset($fball_settings['embed_width']) ? htmlspecialchars ($fball_settings['embed_width']) : ''); ?>"/></td>
                        </tr>
-					   <tr class="fballrow_white">
-                        <th scope="fballrow"><?php _e('Num Rows To Display','facebookall');?></th>
-                         <td><input size="90" type="text" name="fball_settings[facepile_numrows]" value="<?php echo (isset($fball_settings['facepile_numrows']) ? htmlspecialchars ($fball_settings['facepile_numrows']) : ''); ?>"/></td>
-                       </tr>
-                      <tr class="fballrow_white">
-                         <th><?php _e('Color Scheme','facebookall');?></th>
-                          <td>
-						  <?php $faceplielight = "";
-                               $facepliedark = "";
-                               if($fball_settings["facepile_color"] == "1") $faceplielight = "checked='checked'";
-                               elseif($fball_settings["facepile_color"] == "0") $facepliedark = "checked='checked'";
-                               else $faceplielight = "checked='checked'";?>
-                         <input name="fball_settings[facepile_color]" type="radio" <?php echo $faceplielight;?>value="1" />&nbsp;&nbsp;<?php _e('Light','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[facepile_color]" type="radio" <?php echo $facepliedark;?>value="0" />&nbsp;&nbsp;<?php _e('Dark','facebookall');?>
-						 </td>
-                        </tr>
-						<tr>
-                         <th><?php _e('Size','facebookall');?></th>
-                          <td>
-						  <?php $facepliesmall = "";
-                                $facepliemedium = "";
-							    $faceplielarge = "";
-                               if($fball_settings["facepile_size"] == "0") $facepliesmall = "checked='checked'";
-                               elseif($fball_settings["facepile_size"] == "1") $facepliemedium = "checked='checked'";
-							   elseif($fball_settings["facepile_size"] == "2") $faceplielarge = "checked='checked'";
-                               else $facepliemedium = "checked='checked'";?>
-                         <input name="fball_settings[facepile_size]" type="radio" <?php echo $facepliesmall;?>value="0" />&nbsp;&nbsp;<?php _e('Small','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[facepile_size]" type="radio" <?php echo $facepliemedium;?>value="1" />&nbsp;&nbsp;<?php _e('Medium','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						 <input name="fball_settings[facepile_size]" type="radio" <?php echo $faceplielarge;?>value="2" />&nbsp;&nbsp;<?php _e('Large','facebookall');?>
-						 </td>
-                        </tr>
-                        </table>
+             
+                         </table>
 					</div>
 					<!-- Fanbox settings ends-->
 					
 					<!-- Bar settings -->
 						<div id="tabs-5">
-						<table class="form-table facebookall_table">
+						<table class="facebookall_table">
                          <tr>
-                         <th class="head" colspan="2"><?php _e('Facebook All Recommendations Bar Settings','facebookall');?></th>
+                         <th class="head" colspan="2"><?php _e('Facebook All Send Button Settings','facebookall');?></th>
                          </tr>
-						 <tr >
-                        <th scope="fballrow"><?php _e('Enable Recommendations Bar','facebookall');?></th>
-						 <?php $yesenable_recbar = "";
-                               $noenable_recbar = "";
-                               if($fball_settings["enable_recbar"] == "1") $yesenable_recbar = "checked='checked'";
-                               elseif($fball_settings["enable_recbar"] == "0") $noenable_recbar = "checked='checked'";
-                               else $noenable_recbar = "checked='checked'";?>
-                         <td><input name="fball_settings[enable_recbar]" type="radio" <?php echo $yesenable_recbar;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[enable_recbar]" type="radio" <?php echo $noenable_recbar;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?></td>
-                       </tr>
-						 <tr>
-                         <th scope="fballrow"><?php _e('Show Recommendations Bar On', 'facebookall');?></th>
-                         <td>
-                         <input type="checkbox"  name="fball_settings[rec_posts]" value="1" <?php echo isset($fball_settings['rec_posts']) && $fball_settings['rec_posts'] == 1 ? 'checked' : '' ?> /> &nbsp;&nbsp;<label><?php _e('Posts', 'facebookall');?></label><br />
-						 <input type="checkbox"  name="fball_settings[rec_pages]" value="1" <?php echo isset($fball_settings['rec_pages']) && $fball_settings['rec_pages'] == 1 ? 'checked' : '' ?> /> &nbsp;&nbsp;<label><?php _e('Pages', 'facebookall');?></label><br />
-                         <input type="checkbox"  name="fball_settings[rec_home]" value="1" <?php echo isset($fball_settings['rec_home']) && $fball_settings['rec_home'] == 1 ? 'checked' : '' ?> /> &nbsp;&nbsp;<label><?php _e('Home Page', 'facebookall');?></label>
-                        </td>
-                        </tr>                          <tr >
-                        <th scope="fballrow"><?php _e('Read Time','facebookall');?></th>
-                         <td><input size="90" type="text" name="fball_settings[recbar_readtime]" value="<?php echo (isset($fball_settings['recbar_readtime']) ? htmlspecialchars ($fball_settings['recbar_readtime']) : '30'); ?>"/></td>
-                       </tr>
-					   <tr class="fballrow_white">
-                        <th scope="fballrow"><?php _e('App Id','facebookall');?></th>
-                         <td><input size="90" type="text" name="fball_settings[recbar_appid]" value="<?php echo (isset($fball_settings['recbar_appid']) ? htmlspecialchars ($fball_settings['recbar_appid']) : ''); ?>"/></td>
+						 
+						       <tr class="fballrow_white">
+                        <th scope="fballrow"><?php _e('URL to send','facebookall');?></th>
+                         <td><input size="90" type="text" name="fball_settings[send_url]" value="<?php echo (isset($fball_settings['send_url']) ? htmlspecialchars ($fball_settings['send_url']) : ''); ?>"/></td>
                        </tr>
                       <tr class="fballrow_white">
-                         <th><?php _e('Verb To Display','facebookall');?></th>
+                         <th><?php _e('Color Scheme','facebookall');?></th>
                           <td>
-						  <?php $like = "";
-                               $recommend = "";
-                               if($fball_settings["recbar_verb"] == "1") $like = "checked='checked'";
-                               elseif($fball_settings["recbar_verb"] == "0") $recommend = "checked='checked'";
-                               else $like = "checked='checked'";?>
-                         <input name="fball_settings[recbar_verb]" type="radio" <?php echo $like;?>value="1" />&nbsp;&nbsp;<?php _e('like','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[recbar_verb]" type="radio" <?php echo $recommend;?>value="0" />&nbsp;&nbsp;<?php _e('recommend','facebookall');?>
+						             <?php $send_light = "";
+                               $send_dark = "";
+                               if($fball_settings["send_color"] == "1") $send_light = "checked='checked'";
+                               elseif($fball_settings["send_color"] == "0") $send_dark = "checked='checked'";
+                               else $send_light = "checked='checked'";?>
+                         <input name="fball_settings[send_color]" type="radio" <?php echo $send_light;?>value="1" />&nbsp;&nbsp;<?php _e('Light','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[send_color]" type="radio" <?php echo $send_dark;?>value="0" />&nbsp;&nbsp;<?php _e('Dark','facebookall');?>
 						 </td>
                         </tr>
-						<tr>
-                         <th><?php _e('Side','facebookall');?></th>
-                          <td>
-						  <?php $left = "";
-                                $right = "";
-							   if($fball_settings["recbar_side"] == "1") $left = "checked='checked'";
-                               elseif($fball_settings["recbar_side"] == "0") $right = "checked='checked'";
-							   else $left = "checked='checked'";?>
-                         <input name="fball_settings[recbar_side]" type="radio" <?php echo $left;?>value="1" />&nbsp;&nbsp;<?php _e('left','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <input name="fball_settings[recbar_side]" type="radio" <?php echo $right;?>value="0" />&nbsp;&nbsp;<?php _e('right','facebookall');?> 					 </td>
-                        </tr>
+						
                         </table>
+<!-- follow settings start-->
+
+<table class="facebookall_table">
+                         <tr>
+                         <th class="head" colspan="2"><?php _e('Facebook All Follow Button','facebookall');?></th>
+                         </tr>
+
+                         <tr class="fballrow_white">
+                        <th scope="fballrow"><?php _e('Profile URL','facebookall');?></th>
+                         <td><input size="90" type="text" name="fball_settings[follow_url]" value="<?php echo (isset($fball_settings['follow_url']) ? htmlspecialchars ($fball_settings['follow_url']) : ''); ?>"/></td>
+                       </tr>
+
+                       <tr class="fballrow">
+                        <th scope="fballrow"><?php _e('Width','facebookall');?></th>
+                         <td><input size="90" type="text" name="fball_settings[follow_width]" value="<?php echo (isset($fball_settings['follow_width']) ? htmlspecialchars ($fball_settings['follow_width']) : ''); ?>"/></td>
+                       </tr>
+
+                       <tr class="fballrow_white">
+                        <th scope="fballrow"><?php _e('Height','facebookall');?></th>
+                         <td><input size="90" type="text" name="fball_settings[follow_height]" value="<?php echo (isset($fball_settings['follow_height']) ? htmlspecialchars ($fball_settings['follow_height']) : ''); ?>"/></td>
+                       </tr>
+             
+                      <tr class="fballrow_white">
+                         <th><?php _e('Color Scheme','facebookall');?></th>
+                          <td>
+                         <?php $follow_light = "";
+                               $follow_dark = "";
+                               if($fball_settings["follow_color"] == "1") $follow_light = "checked='checked'";
+                               elseif($fball_settings["follow_color"] == "0") $follow_dark = "checked='checked'";
+                               else $follow_light = "checked='checked'";?>
+                         <input name="fball_settings[follow_color]" type="radio" <?php echo $follow_light;?>value="1" />&nbsp;&nbsp;<?php _e('Light','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[follow_color]" type="radio" <?php echo $follow_dark;?>value="0" />&nbsp;&nbsp;<?php _e('Dark','facebookall');?>
+             </td>
+                        </tr>
+            <tr>
+                         <th><?php _e('Show Faces','facebookall');?></th>
+                          <td>
+                          <?php $show_faces_yes = "";
+                                $show_faces_no = "";
+                 if($fball_settings["follow_faces"] == "1") $show_faces_yes = "checked='checked'";
+                 elseif($fball_settings["follow_faces"] == "0") $show_faces_no = "checked='checked'";
+                 else $show_faces_yes = "checked='checked'";?>
+                         <input name="fball_settings[follow_faces]" type="radio" <?php echo $show_faces_yes;?>value="1" />&nbsp;&nbsp;<?php _e('Yes','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[follow_faces]" type="radio" <?php echo $show_faces_no;?>value="0" />&nbsp;&nbsp;<?php _e('No','facebookall');?>           </td>
+                        </tr>
+                        <tr>
+                         <th><?php _e('Layout Style','facebookall');?></th>
+                          <td>
+                          <?php $follow_standard = "";
+                                $follow_box_count = "";
+                                $follow_button_count = "";
+                                $follow_button = "";
+                 if($fball_settings["follow_layout"] == "standard") $follow_standard = "checked='checked'";
+                 elseif($fball_settings["follow_layout"] == "box_count") $follow_box_count = "checked='checked'";
+                 elseif($fball_settings["follow_layout"] == "button_count") $follow_button_count = "checked='checked'";
+                 elseif($fball_settings["follow_layout"] == "button") $follow_button = "checked='checked'";
+                 else $follow_standard = "checked='checked'";?>
+                         <input name="fball_settings[follow_layout]" type="radio" <?php echo $follow_standard;?>value="standard" />&nbsp;&nbsp;<?php _e('Standard','facebookall');?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[follow_layout]" type="radio" <?php echo $follow_box_count;?>value="box_count" />&nbsp;&nbsp;<?php _e('Box Count','facebookall');?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[follow_layout]" type="radio" <?php echo $follow_button_count;?>value="button_count" />&nbsp;&nbsp;<?php _e('Button Count','facebookall');?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input name="fball_settings[follow_layout]" type="radio" <?php echo $follow_button;?>value="button" />&nbsp;&nbsp;<?php _e('Button','facebookall');?> 
+                         </td>
+                        </tr>
+
+                        </table>
+<!-- follow settings ends-->
                         </div>
 					<!-- Bar settings ends-->
 					<p class="submit">
@@ -738,7 +735,9 @@ function facebookall_admin_settings() {
 		</p>
 		</form>
 		  </div>
-		  <div style="width:27%; float:left; margin-left:15px;">
+		  <div class="box-container">
+      
+      <!-- paypal block -->
 		  <div>
            <div class="fballwelcome-panel" style="margin:0; padding:5px; line-height: 24px;">
 		   
@@ -759,8 +758,24 @@ function facebookall_admin_settings() {
 
         </div>
       </div>
+      <!-- paypal block ends-->
+       <!-- Helpful block start -->
     <div>
-       <div class="fballwelcome-panel" style="margin-top:12px; padding:5px; line-height:24px;">
+       <div class="fballwelcome-panel" style="line-height:24px;" >
+     <table><tr><td style="border-bottom: 1px solid #dfdfdf;">
+           <b><?php _e('Helpful Links:', 'facebookall'); ?></b></td></tr>
+               <tr><td><a target="_BLANK" href="https://developers.facebook.com/docs/plugins"><?php _e('Facebook Social Plugins - developer section', 'facebookall'); ?></td></tr>
+               <tr><td> <a target="_BLANK" href="https://developers.facebook.com/docs/plugins/embedded-posts"><?php _e('More About Facebook Embedded Posts', 'facebookall'); ?></td></tr>
+               <tr><td> <a target="_BLANK" href="https://developers.facebook.com/docs/plugins/follow-button"><?php _e('More About Facebook Follow Button', 'facebookall'); ?></td></tr>
+              <tr><td><a target="_BLANK" href="https://developers.facebook.com/docs/plugins/page-plugin"><?php _e('More About Facebook Page Plugin', 'facebookall'); ?></td></tr>
+               <tr><td> <a target="_BLANK" href="https://developers.facebook.com/docs/plugins/send-button"><?php _e('More About Facebook Send Button', 'facebookall'); ?></a></td></tr>
+             </table>
+        </div>
+     </div>
+     <!-- Helpful block ends -->
+      <!-- analytics block start -->
+    <div>
+       <div class="fballwelcome-panel" style="margin-top:12px; padding:5px; line-height:24px;" >
 	   <table><tr><td style="border-bottom: 1px solid #dfdfdf;">
            <b><?php _e('Your App Statistics:', 'facebookall'); ?></b></td></tr>
              <?php if (!empty($app_id)) {?>
@@ -773,6 +788,7 @@ function facebookall_admin_settings() {
              <?php }?></table>
         </div>
      </div>
+     <!-- analytics block ends -->
     </div>
    </div>
 </div>

@@ -3,7 +3,7 @@
 Plugin Name: Facebook All
 Plugin URI: http://www.sourceaddons.com/
 Description: Allow your visitors to <strong>comment, login, register and share with facebook and google </strong> also post on their facebook wall.
-Version: 1.4
+Version: 1.5
 Author: sourceaddons
 Author URI: http://www.sourceaddons.com/
 License: GPL2
@@ -45,18 +45,13 @@ function facebookall_front_scripts() {
   //wp_enqueue_script('connect_js');
 }
 
-function facebookall_fbmlsetup() {
-  $fball_settings = get_option('fball_settings');
-  if (!empty($fball_settings['apikey']) || !empty($fball_settings['recbar_appid']) || !empty($fball_settings['comment_appid'])) {
-    $appid = (!empty($fball_settings['apikey']) ? $fball_settings['apikey'] : $fball_settings['comment_appid']);
-    $appid = (!empty($appid) ? $appid : $fball_settings['recbar_appid']);
-  }?>
+function facebookall_fbmlsetup() {?>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $appid; ?>";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <?php }
@@ -91,18 +86,19 @@ add_action ('admin_menu', 'facebookall_admin_menu');
 function facebookall_default_options() {
    global $fball_settings;
     add_option( 'fball_settings',
-	    array( 'login_title' => 'Or',
-		       'fbicon_text' => 'Login with Facebook',
-		       'loginpage' => '1',
-               'registerpage' => '1',
-               'commentpage' => '1',
-               'fanbox_pageurl' => 'http://www.facebook.com/pages/Source-addons/162763307197548',
-               'fanbox_width' => '200',
-               'fanbox_height' => '200',
-               'facepile_pageurl' => 'http://www.facebook.com/pages/Source-addons/162763307197548',
-               'facepile_width' => '200',
-               'facepile_numrows' => '2',
-        ));
+	    array('login_title' => 'Or',
+		        'fbicon_text' => 'Login with Facebook',
+		        'loginpage' => '1',
+            'registerpage' => '1',
+            'commentpage' => '1',
+            'fanbox_pageurl' => 'http://www.facebook.com/pages/Source-addons/162763307197548',
+            'fanbox_width' => '200',
+            'fanbox_height' => '200',
+            'embed_url' =>'https://www.facebook.com/FacebookDevelopers/posts/10151471074398553',
+            'embed_width' => '350',
+            'send_url' => 'https://developers.facebook.com/docs/plugins/',
+            'follow_url' => 'https://www.facebook.com/zuck',
+      ));
 }
 register_activation_hook(__FILE__, 'facebookall_default_options');
 

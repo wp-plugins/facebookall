@@ -33,9 +33,10 @@ function facebookall_render_widget_button() {
 		$size ='60';
 		$user = get_userdata($user_ID);
 		echo "<div><div style='float:left;'>";
-		if(($fbavatar = get_user_meta($user_ID, 'facebookall_user_thumbnail', true)) !== false && strlen(trim($fbavatar)) > 0){
+		if(($fbavatar = get_user_meta($user_ID, 'facebookall_user_thumbnail', true)) !== false && strlen(trim($fbavatar)) > 0 && $fball_settings['fbavatar'] == 'fbavatar'){
 			echo '<img alt="user facebook avatar" src="'.$fbavatar.'" height = "'.$size.'" width = "'.$size.'" title="'.$user->user_login.'" style="background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #CCCCCC; display: block; margin: 2px 4px 4px 0; padding: 2px;"/>';
-		}else{
+		}
+		else{
 			echo @get_avatar($user_ID, $size, $default, $alt);   
 		}
 		echo "</div><div style='float:left; margin-left:10px;padding:1px;'>"; 
@@ -138,32 +139,43 @@ function facebookall_get_current_url() {
  * Create fanbox.
  */
 function facebookall_render_fanbox() {
-  $fball_settings = get_option('fball_settings');?>
- <iframe src="//www.facebook.com/plugins/likebox.php?href=<?php echo urlencode($fball_settings['fanbox_pageurl']);?>&amp;width=<?php echo $fball_settings['fanbox_width'];?>&amp;height=<?php echo $fball_settings['fanbox_height'];?>&amp;colorscheme=<?php if($fball_settings['fanbox_color'] == '1') { echo 'light';}else {echo 'dark';}?>&amp;show_faces=<?php if($fball_settings['fanbox_faces'] == '0') { echo 'false';}else {echo 'true';}?>&amp;stream=<?php if($fball_settings['fanbox_stram'] == '0') { echo 'false';}else {echo 'true';}?>&amp;header=<?php if($fball_settings['fanbox_header'] == '0') { echo 'false';}else {echo 'true';}?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:<?php echo $fball_settings['fanbox_width'];?>px; height:<?php echo $fball_settings['fanbox_height'];?>px;" allowTransparency="true"></iframe>
-<?php }
-
-/*
- * Create facepile.
- */
-function facebookall_render_facepile() {
-  $fball_settings = get_option('fball_settings');?>
-  <div class="fb-facepile" data-href="<?php echo trim($fball_settings['facepile_pageurl'])?>" data-width="<?php echo $fball_settings['facepile_width']?>" data-max-rows="<?php echo $fball_settings['facepile_numrows']?>" data-colorscheme="<?php if($fball_settings['facepile_color'] == '1') { echo 'light';}else {echo 'dark';}?>" data-size="<?php if($fball_settings['facepile_size'] == '0') { echo 'small';}elseif($fball_settings['facepile_size'] == '1') {echo 'medium';}else {echo 'large';}?>" data-show-count="true"></div>
-<?php }
-
-/*
- * Create recommendations bar.
- */
-function facebookall_render_recommendbar() {
   $fball_settings = get_option('fball_settings');
-  if ($fball_settings['enable_recbar'] == '1') { 
-  $side = ($fball_settings['recbar_side'] == '1' ? 'left' : 'right');
-  $verb = ($fball_settings['recbar_verb'] == '1' ? 'like' : 'recommend');
-if ((is_single() && $fball_settings['rec_posts'] == '1') ||
-      (is_page() && $fball_settings['rec_pages'] == '1') ||
-      ((is_home() || is_front_page()) && $fball_settings['rec_home'] == '1')) {
-		$content = "<div class=\"fb-recommendations-bar\" data-href=\"".get_permalink()."\" data-read-time=\"".$fball_settings['recbar_readtime']."\" data-side=\"".$side."\" data-action=\"".$verb."\"></div>";
-     }
-echo $content;
+  //$pagename = explode('/', $fball_settings['fanbox_pageurl']);?>
+ <div class="fb-page" data-href="<?php echo $fball_settings['fanbox_pageurl'];?>" data-width="<?php echo $fball_settings['fanbox_width'];?>" data-height="<?php echo $fball_settings['fanbox_height'];?>" data-hide-cover="<?php if($fball_settings['fanbox_cover'] == '0') { echo 'false';}else {echo 'true';}?>" data-show-facepile="<?php if($fball_settings['fanbox_faces'] == '0') { echo 'false';}else {echo 'true';}?>" data-show-posts="<?php if($fball_settings['fanbox_posts'] == '0') { echo 'false';}else {echo 'true';}?>"><div class="fb-xfbml-parse-ignore"></div></div>
+<?php }
+
+
+/*
+ * Create send button.
+ */
+function facebookall_render_send() {
+  $fball_settings = get_option('fball_settings');
+  $send_url = (!empty($fball_settings['send_url']) ? $fball_settings['send_url'] : get_permalink());
+  $send_color = ($fball_settings['send_color'] == '1' ? 'light' : 'dark');
+  $send_content = '<div class="fb-send" data-href="'.$send_url.'" data-colorscheme="'.$send_color.'"></div>';
+  echo $send_content;
  }
-}
-add_action ('wp_footer', 'facebookall_render_recommendbar');
+
+/*
+ * Create follow button.
+ */
+function facebookall_render_fbutton() {
+  $fball_settings = get_option('fball_settings');
+  $follow_url = ($fball_settings['follow_url'] ? $fball_settings['follow_url'] : '');
+  $follow_width = ($fball_settings['follow_width'] ? $fball_settings['follow_width'] : '200');
+  $follow_height = ($fball_settings['follow_height'] ? $fball_settings['follow_height'] : '50');
+  $follow_color = ($fball_settings['follow_color'] == '1' ? 'light' : 'dark');
+  $follow_faces = ($fball_settings['follow_faces'] == '1' ? 'true' : 'false');
+  $follow_layout = ($fball_settings['follow_layout'] ? $fball_settings['follow_layout'] : 'standard');?>
+  <div class="fb-follow" data-href="<?php echo $follow_url;?>" data-width="<?php echo $follow_width;?>" data-height="<?php echo $follow_height;?>" data-colorscheme="<?php echo $follow_color;?>" data-layout="<?php echo $follow_layout;?>" data-show-faces="<?php echo $follow_faces;?>"></div>
+<?php }
+
+/*
+ * Create embedded posts.
+ */
+function facebookall_render_embedded() {
+  $fball_settings = get_option('fball_settings');
+  $embed_url = (!empty($fball_settings['embed_url']) ? $fball_settings['embed_url'] : '');
+  $embed_width = (!empty($fball_settings['embed_url']) ? $fball_settings['embed_url'] : '350');?>
+  <div class="fb-post" data-href="<?php echo $embed_url;?>" data-width="<?php echo $embed_width;?>"></div>
+<?php }

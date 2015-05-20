@@ -59,25 +59,29 @@ global $post;
     $twitter_style = ($layout_style=='1') ? "horizontal" : "vertical";
     $gplus_style = ($layout_style=='1') ? "medium" : "tall";
     $pin_style = ($layout_style=='1') ? "beside" : "above";
-    $digg_style = ($layout_style=='1') ? "DiggCompact" : "DiggMedium";
     $like_btn_style = ($layout_style=='1') ? "button_count" : "box_count";
-	$title 		= str_replace('+','%20',urlencode($post->post_title));
+	$title = str_replace('+','%20',urlencode($post->post_title));
 	    
     $output = "";
    
 	//Output
-    $output .= "<style>.fballshare_left {float:left}.fballshare {margin:0px;text-align:center}.fball_fblike{width:105px;}.fball_pinterest, .fball_linkedin, .fball_digg {margin-right:10px;} .fballshare .fball_fblike span{width: 535px!important;}";
+    $output .= "<style>.fballshare_left {float:left;}.fballshare { margin: 0px; text-align:center} .fball_fbshare{width:90px;}
+	.fball_fblike{width:100px;} .fball_pinterest, .fball_linkedin{margin-right:10px;}";
 	if($layout_style=='1') {
-	$output .= ".fball_plusone {width:70px;margin-top:5px;}.fball_twitter {width:90px;margin-top:5px;}.fball_digg {margin-left:25px;margin-top:5px;}.fball_pinterest, .fball_linkedin{margin-top:5px;}";
+	$output .= ".fball_plusone {width:70px;}.fball_twitter {width:90px;margin-top:12px;}.fball_pinterest, .fball_linkedin{margin-top:9px;}";
 	 } 
 	 else {
-	 $output .= ".fball_fblike{width:70px;margin-top:1px;}.fball_twitter {width:66px;}.fball_plusone {width:62px;margin-left:5px}.fball_pinterest{margin-top:20px}";
+	 $output .= ".fball_fblike{width:70px;margin-top:1px;} .fball_fbshare{width:70px;} .fball_twitter {width:66px;}.fball_plusone {width:62px;margin-left:5px}.fball_pinterest{margin-top:30px}";
 	 }
 	 
 $output .="</style><div class='fballshare'>";
-    if ($fball_settings['share_facebook']== '1' ) {
-	    $output .= "<div class='fball_fblike fballshare_left'><div class='fb-share-button' data-href='" . get_permalink() . "' data-type='" . $like_btn_style . "'></div></div>";
+    if ($fball_settings['share_facebooklike']== '1' ) {
+	    $output .= "<div class='fballshare_left fball_fbshare'><div class='fb-like' data-href='" . get_permalink() . "' data-layout='" . $like_btn_style . "' data-action='like'></div>
+</div>";
     }
+	if ($fball_settings['share_facebook']== '1' ) {
+	    $output .= "<div class='fball_fblike fballshare_left'><div class='fb-share-button' data-href='" . get_permalink() . "' data-layout='" . $like_btn_style . "'></div></div>";
+	  }
     if ($fball_settings['share_linkedin']== '1') {
       $output .= "<div class='fball_linkedin fballshare_left'><script type='IN/Share' data-url=" . get_permalink() . " data-counter='" . $linkedin_style . "'></script></div>";
 	  }
@@ -89,16 +93,6 @@ $output .="</style><div class='fballshare'>";
 	  }
     if ($fball_settings['share_pin']== '1') {
       $output .= "<div class='fball_pinterest fballshare_left'><a data-pin-config='" . $pin_style ."' href='//pinterest.com/pin/create/button/?url=" . get_permalink() . "&media=&description=" . $title . "' data-pin-do = 'buttonPin' ><img src='//assets.pinterest.com/images/pidgets/pin_it_button.png'/></a></div>";
-	  }
-    if ($fball_settings['share_digg']== '1') {
-	  $output .= "<script>(function() {
-					  var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
-					  s.type = 'text/javascript';
-					  s.async = true;
-					  s.src = 'http://widgets.digg.com/buttons.js';
-					  s1.parentNode.insertBefore(s, s1);
-					})();</script>";
-      $output .= "<div class='fball_digg fballshare_left'><a class='DiggThisButton " . $digg_style . "' href='http://digg.com/submit?url='".get_permalink()."'></a></div>";
 	  }
       $output .="<div style='clear:both'></div></div>";
 	  $sharetitle = '';

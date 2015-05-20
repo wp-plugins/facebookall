@@ -11,7 +11,7 @@ var FbAll = {
         if (clientid.value == '') {
             alert("You have not configure facebook api settings.")
         } else {
-            var openedwin = window.open('https://graph.facebook.com/oauth/authorize?client_id=' + clientid.value + '&redirect_uri=' + redirecturi.value + '&scope=email,user_birthday,user_hometown,user_location,user_work_history,user_website&display=popup', '', 'scrollbars=no, menubar=no, height='+height+', width='+width+', top='+top+', left='+left+', resizable=yes, toolbar=no, status=no');
+            var openedwin = window.open('https://graph.facebook.com/v2.3/oauth/authorize?client_id=' + clientid.value + '&redirect_uri=' + redirecturi.value + '&scope=public_profile,email&display=popup', '', 'scrollbars=no, menubar=no, height='+height+', width='+width+', top='+top+', left='+left+', resizable=yes, toolbar=no, status=no');
 			if (window.focus) {openedwin.focus()}
         }
     },

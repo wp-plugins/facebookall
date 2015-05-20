@@ -4,16 +4,16 @@ if (isset($_GET['apikey'])) {
   $apikey = trim($_GET['apikey']);
   $apisecret = trim($_GET['apisecret']);
   $apicred = $_GET['api_request'];
-  check_api_settings($apikey, $apicred);
+  check_api_settings($apikey, $apisecret, $apicred);
 }
 
 /**
  * Check api credential settings.
  */
 
-  function check_api_settings($apikey, $apicred) {
+  function check_api_settings($apikey, $apisecret, $apicred) {
     if (isset($apikey)) {
-	   $url = "https://graph.facebook.com/".$apikey;
+	   $url = "https://graph.facebook.com/v2.3/".$apikey."?access_token=".$apikey.'|'.$apisecret;
        if ($apicred == 'curl') {
          if (in_array('curl', get_loaded_extensions ()) AND function_exists('curl_exec')) {
            $curl = curl_init();

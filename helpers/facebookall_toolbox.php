@@ -33,7 +33,7 @@ function facebookall_post_user_wall($access_token, $fbid, $newfbuser) {
  */
 function facebookall_wallpost_curl ($attachment,$fbid) {
   if (function_exists('curl_init')) {
-    $url = "https://graph.facebook.com/".$fbid."/feed";
+    $url = "https://graph.facebook.com/v2.3/".$fbid."/feed";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL,$url);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -72,23 +72,24 @@ add_action('manage_users_custom_column', 'facebookall_show_user_column', 10, 3);
  * Replace default avatar with facebook avatar
  */
 function facebookall_show_social_avatar($avatar, $avatar_user, $size, $default, $alt = '') {
+    $fball_settings = get_option('fball_settings');
 	$user_id = null;
-	if(is_numeric($avatar_user)){
-		if($avatar_user > 0){
+	  if(is_numeric($avatar_user)){
+		 if($avatar_user > 0){
 			$user_id = $avatar_user;
-		}
-	}
-	elseif(is_object($avatar_user)){
+		 }
+	  }
+	  elseif(is_object($avatar_user)){
 		if(property_exists($avatar_user, 'user_id') AND is_numeric($avatar_user->user_id)){
 			$user_id = $avatar_user->user_id;
 		}
-	}
-	if(!empty($user_id)){
-		if(($useravatar = get_user_meta($user_id, 'facebookall_user_thumbnail', true)) !== false AND strlen(trim($useravatar)) > 0){
+	  }
+	  if(!empty($user_id)){
+		if(($useravatar = get_user_meta($user_id, 'facebookall_user_thumbnail', true)) !== false AND strlen(trim($useravatar)) > 0 AND $fball_settings['fbavatar'] == 'fbavatar'){
 			return '<img alt="' . esc_attr($alt) . '" src="' . $useravatar . '" class="avatar avatar-' . $size . ' " height="' . $size . '" width="' . $size . '" />';
 		}
-	}
-	return $avatar;
+	  }
+	  return $avatar;
 }
 add_filter('get_avatar', 'facebookall_show_social_avatar', 10, 5);
 
@@ -148,26 +149,42 @@ function facebookall_login_shortcode() {
 add_shortcode ('facebookall_login', 'facebookall_login_shortcode');
 
 /*
- * Make short code for likebox.
+ * Make short code for page plugin.
  */
-function facebookall_likebox_shortcode() {
+function facebookall_pageplugin_shortcode() {
 	return facebookall_render_fanbox();
 }
-add_shortcode ('facebookall_fanbox', 'facebookall_likebox_shortcode');
+add_shortcode ('facebookall_pageplugin', 'facebookall_pageplugin_shortcode');
 
 /*
- * Make short code for facepile.
+ * Make short code for send button.
  */
-function facebookall_facepile_shortcode() {
-	return facebookall_render_facepile();
+function facebookall_send_shortcode() {
+	return facebookall_render_send();
 }
-add_shortcode ('facebookall_facepile', 'facebookall_facepile_shortcode');
+add_shortcode ('facebookall_send', 'facebookall_send_shortcode');
+
+/*
+ * Make short code for follow button.
+ */
+function facebookall_follow_shortcode() {
+	return facebookall_render_fbutton();
+}
+add_shortcode ('facebookall_follow', 'facebookall_follow_shortcode');
+
+/*
+ * Make short code for embedded posts.
+ */
+function facebookall_embed_shortcode() {
+  return facebookall_render_fbutton();
+}
+add_shortcode ('facebookall_embedded', 'facebookall_embed_shortcode');
 
 /*
  * Make short code for share.
  */
 function facebookall_share_shortcode() {
-	return facebookall_get_socialshre();
+  return facebookall_get_socialshre();
 }
 add_shortcode ('facebookall_share', 'facebookall_share_shortcode');
 
