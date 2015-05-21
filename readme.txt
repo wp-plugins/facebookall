@@ -3,7 +3,7 @@ Contributors: sourceaddons, patrykos360 (Language translator - polish)
 Tags: Facebook Login, Facebook Login For Wordpress, Facebook Connect, Social Login, Social Share, facebook fanbox, facebook comments, facebook facepile, facebook all, facebook social plugins, Facebook Analytics, Facebook, Google Login, Google Login For Wordpress, Google Connect, Social Login For Wordpress
 Requires at least: 3.0
 Tested up to: 4.2.2
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,9 @@ Answer to foo bar dilemma.
 3. This is an example of Facebook Analytics in admin area.
 
 == Changelog ==
+
+= 1.6 =
+* Fixed redirect_uri issue (Added option to admin for live and test uri)
 
 = 1.5 =
 * Updated plugin with facebook Graph API v2.3 (Latest Release)

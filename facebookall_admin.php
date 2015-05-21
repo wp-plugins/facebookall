@@ -50,6 +50,7 @@ function facebookall_save_admin_settings($fball_settings) {
   $fball_settings['apikey'] = trim($fball_settings['apikey']);
   $fball_settings['apisecret'] = trim($fball_settings['apisecret']);
   $fball_settings['connection_handler'] = ((isset($fball_settings['connection_handler']) && in_array($fball_settings['connection_handler'], array('curl', 'fopen'))) ? $fball_settings['connection_handler'] : 'curl');
+  $fball_settings['working_platform'] = ((isset($fball_settings['working_platform']) && in_array($fball_settings['working_platform'], array('live', 'localhost'))) ? $fball_settings['working_platform'] : 'live');
   $fball_settings['login_title'] = trim($fball_settings['login_title']);
   $fball_settings['fbicon_text'] = trim($fball_settings['fbicon_text']);
   $fball_settings['custom_button'] = trim($fball_settings['custom_button']);
@@ -223,6 +224,19 @@ function facebookall_admin_settings() {
                        </td>
                        <td><div id="showmsg" style="font-weight:bold;"></div></td>
                         </tr>
+                        <tr class="fballrow_white">
+                         <th scope="fballrow"><?php _e('Working Platform', 'facebookall');?><br /><small><?php _e('To Fix redirect_uri issue on different enviorment.', 'facebookall');?></small></th>
+                         <td>
+						 <?php $live = "";
+                               $localhost = "";
+                               if($fball_settings["working_platform"] == "live") $live = "checked='checked'";
+                               elseif($fball_settings["working_platform"] == "localhost") $localhost = "checked='checked'";
+                               else $live = "checked='checked'";?>
+                         <input name="fball_settings[working_platform]" type="radio" <?php echo $live;?> value="live" />&nbsp;&nbsp;<?php _e('If you are on live or production server', 'facebookall');?>  <br />
+                         <input name="fball_settings[working_platform]" type="radio" <?php echo $localhost;?> value="localhost" />&nbsp;&nbsp;<?php _e('If you are testing on local server(localhost)', 'facebookall');?> 
+                        </td>
+                        </tr>
+                        
                        </table>
 					   <table class="facebookall_table">
                        <tr>

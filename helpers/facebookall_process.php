@@ -3,11 +3,12 @@ function facebookall_make_userlogin() {
   $fball_settings = get_option('fball_settings');
   if (isset($_GET['code']) AND !empty($_GET['code'])) {
     $code = $_GET['code'];
-    $get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url()) .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
-    $access_data = json_decode($get_access_data, true);
-	  if(empty($access_data['access_token'])) {
-	    $get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url().'/') .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
+	if($fball_settings["working_platform"] == "localhost"){
+	  $get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url()) .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
       $access_data = json_decode($get_access_data, true);
+	}else{
+		$get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url().'/') .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
+       $access_data = json_decode($get_access_data, true);
     }
     if(!empty($access_data['access_token'])){
       $access_token = $access_data['access_token'];
