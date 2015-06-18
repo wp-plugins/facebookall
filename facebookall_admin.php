@@ -43,6 +43,7 @@ function facebookall_getapp_result($apikey, $apisecret) {
   }
   return $app_result;
 }
+
 /**
  * Function that save all option page admin settings.
  */
