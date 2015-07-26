@@ -4,11 +4,11 @@ function facebookall_make_userlogin() {
 	if (isset($_GET['code']) AND !empty($_GET['code'])) {
 		$code = $_GET['code'];
 		if(!empty($code)){
-			$get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url()) .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
+			$get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.4/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url()) .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
 			$access_data = json_decode($get_access_data, true);
 		}
 		if(empty($access_data['access_token'])){
-			$get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.3/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url().'/') .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
+			$get_access_data = facebookall_get_fb_contents("https://graph.facebook.com/v2.4/oauth/access_token?" . 'client_id=' . $fball_settings ['apikey'] . '&redirect_uri=' . urlencode(site_url().'/') .'&client_secret=' .  $fball_settings ['apisecret'] . '&code=' . urlencode($code));
 			$access_data = json_decode($get_access_data, true);
 		}
 		if(!empty($access_data['access_token'])){
@@ -25,7 +25,7 @@ function facebookall_make_userlogin() {
 		</script>
 		<?php }
 		if(!empty($_REQUEST['fball_access_token']) AND isset($_REQUEST['fball_redirect'])) {
-			$fbuser_info = json_decode(facebookall_get_fb_contents("https://graph.facebook.com/v2.3/me?access_token=".$_REQUEST['fball_access_token']));
+			$fbuser_info = json_decode(facebookall_get_fb_contents("https://graph.facebook.com/v2.4/me?fields=id,name,first_name,last_name,email,age_range,link,gender,picture,locale,verified&access_token=".$_REQUEST['fball_access_token']));
 			$fbdata = facebookall_get_fbuserprofile_data($fbuser_info);
 			if (!empty($fbdata['email']) AND !empty($fbdata['id'])) {
       // Filter username form data.
@@ -158,7 +158,7 @@ function facebookall_get_fbuserprofile_data($fbuser_info) {
 	$fbdata['last_name'] = (!empty($fbuser_info->last_name) ? $fbuser_info->last_name : '');
 	$fbdata['name'] = (!empty($fbuser_info->name) ? $fbuser_info->name : '');
 	$fbdata['email'] = (!empty($fbuser_info->email) ? $fbuser_info->email : '');
-	$fbdata['thumbnail'] = "https://graph.facebook.com/v2.3/" . $fbdata['id'] . "/picture";
+	$fbdata['thumbnail'] = "https://graph.facebook.com/v2.4/" . $fbdata['id'] . "/picture";
 	$fbdata['aboutme'] = (!empty($fbuser_info->bio) ? $fbuser_info->bio : "");
 	$fbdata['website'] = (!empty( $fbuser_info->link) ? $fbuser_info->link : "");
 	return $fbdata;

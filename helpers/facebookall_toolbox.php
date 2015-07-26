@@ -33,7 +33,7 @@ function facebookall_post_user_wall($access_token, $fbid, $newfbuser) {
  */
 function facebookall_wallpost_curl ($attachment,$fbid) {
   if (function_exists('curl_init')) {
-    $url = "https://graph.facebook.com/v2.3/".$fbid."/feed";
+    $url = "https://graph.facebook.com/v2.4/".$fbid."/feed";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL,$url);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
