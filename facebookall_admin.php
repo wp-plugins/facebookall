@@ -27,7 +27,7 @@ add_action('admin_init', 'facebookall_register_admin_options');
  * Function that getting app result from facebook.
  */
 function facebookall_getapp_result($apikey, $apisecret) {
-  $url = "https://graph.facebook.com/v2.3/".$apikey."?access_token=".$apikey.'|'.$apisecret;
+  $url = "https://graph.facebook.com/v2.4/".$apikey."?access_token=".$apikey.'|'.$apisecret;
   if (function_exists('curl_init')) {
     $curl = curl_init();
     curl_setopt( $curl, CURLOPT_URL, $url);
@@ -345,7 +345,7 @@ function facebookall_admin_settings() {
      <th class="head" colspan="2"><?php _e('New User Wall/Status Settings','facebookall');?></th>
    </tr>
    <tr>
-     <td colspan="2" style="color:red;"><?php printf (__ ('Note :- You must submit your app for Login Review to wall post work %s, Also need "publish_actions" permission to be add in "wp-content/plugins/facebookall/assets/js/fball_connect.js" in the scope variable.', 'facebookall'),'<a href="https://developers.facebook.com/docs/facebook-login/permissions/v2.3" target="_blank">More About Login Review</a>');?>
+     <td colspan="2" style="color:red;"><?php printf (__ ('Note :- You must submit your app for Login Review to wall post work %s, Also need "publish_actions" permission to be add in "wp-content/plugins/facebookall/assets/js/fball_connect.js" in the scope variable.', 'facebookall'),'<a href="https://developers.facebook.com/docs/facebook-login/permissions/v2.4" target="_blank">More About Login Review</a>');?>
      </td>
    </tr>
    <tr>

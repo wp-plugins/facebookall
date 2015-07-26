@@ -13,7 +13,7 @@ if (isset($_GET['apikey'])) {
 
   function check_api_settings($apikey, $apisecret, $apicred) {
     if (isset($apikey)) {
-	   $url = "https://graph.facebook.com/v2.3/".$apikey."?access_token=".$apikey.'|'.$apisecret;
+	   $url = "https://graph.facebook.com/v2.4/".$apikey."?access_token=".$apikey.'|'.$apisecret;
        if ($apicred == 'curl') {
          if (in_array('curl', get_loaded_extensions ()) AND function_exists('curl_exec')) {
            $curl = curl_init();
